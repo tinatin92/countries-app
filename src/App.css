@@ -324,11 +324,86 @@ header {
   }
 }
 @media (max-width: 992px) {
-  
+  .navigation nav{
+   display: none;
+  }
+  .share::before, .share::after {
+    height: 80px;
+}
+.hero-section__info h1 {
+  font-size: 54px;
+}
+.hero-section__info div {
+  width: 300px;
+  font-size: 18px;
+}
+.hero-section__info::after{
+  width: 340px;
+  height: 340px;
+  top: -58px;
+}
+.hero-section__info h1::after {
+  left: 298px;
+}
+
+.country-box {
+  width: 50%;
+}
+
+.countries-row{
+  padding: 50px 0;
+}
+.countries {
+  margin: 100px 0;
+}
+.hero-section{
+  height: 600px;
+}
+
 }
 @media (max-width: 768px) {
+ 
+  .share::before, .share::after {
+    height: 50px;
+}
+  .hero-section__info h1::after{
+    display: none;
+  }
+  .countrie-text div:first-of-type {
+    width: 40%;
+}
 }
 @media (max-width: 576px) {
+  .search input{
+    display: none;
+  }
+  .hero-section__info::after{
+    width: 150px;
+    height: 150px;
+  }
+  .hero-image {
+    width: 85%;
+  }
+  .share-bar{
+    width: 70px;
+  }
+  .hero-section {
+    height: 540px;
+}
+.hero-section__info h1 {
+  font-size: 36px;
+}
+.header-logo{
+  width: 100px;
+}
+.country-box{
+  width: 100%;
+}
+.hero-section__info div {
+  width: 250px;
+  font-size: 18px;
+}
+
 }
 @media (max-width: 440px) {
 }

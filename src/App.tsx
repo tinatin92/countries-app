@@ -1,5 +1,4 @@
-/* import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg"; */
+
 import heroImage from "./assets/japan.webp";
 import headerLogo from "./assets/logo.svg";
 import searchIcon from "./assets/Search.svg";
@@ -20,7 +19,7 @@ const COUNTRIES__DATA: { title: string; capital: string; population: number, ima
   capital: "Tokyo",
   population: 125100000
 }
-const populationFormatted = COUNTRIES__DATA.population.toLocaleString(); // "125,100,000"
+const populationFormatted = COUNTRIES__DATA.population.toLocaleString(); 
 
 
 function App() {

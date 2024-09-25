@@ -1,0 +1,48 @@
+.countries {
+  margin: 200px 0;
+}
+.card-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 100px 0;
+
+}
+
+
+
+
+
+
+@media (max-width: 1620px) {
+  .countries {
+    margin: 150px 0;
+  }
+}
+@media (max-width: 1400px) {
+}
+@media (max-width: 1200px) {
+  .countrie-text div:first-of-type {
+    width: 33%;
+  }
+}
+@media (max-width: 992px) {
+  .countries-row {
+    padding: 50px 0;
+  }
+  .countries {
+    margin: 100px 0;
+  }
+}
+@media (max-width: 768px) {
+  .countrie-text div:first-of-type {
+    width: 40%;
+  }
+}
+@media (max-width: 576px) {
+  .country-box {
+    width: 100%;
+  }
+}
+@media (max-width: 440px) {
+}

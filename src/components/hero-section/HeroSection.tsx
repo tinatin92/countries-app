@@ -2,6 +2,7 @@ import heroImage from "../../assets/japan.webp";
 import classes from "./HeroSection.module.css";
 import Container from "../UI/container/Container";
 import HeroInfo from "./hero-info/HeroInfo";
+import ShareBar from "../share-bar/ShareBar";
 
 const HERO_SECTION__DATA: { title: string; text: string } = {
   title: "Around the word",
@@ -11,6 +12,7 @@ const HERO_SECTION__DATA: { title: string; text: string } = {
 const HeroSection: React.FC = () => {
   return (
     <section className={classes["hero-section"]}>
+        <ShareBar />
       <Container>
        <HeroInfo title={HERO_SECTION__DATA.title} text={HERO_SECTION__DATA.text} />
       </Container>

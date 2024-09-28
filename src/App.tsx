@@ -1,21 +1,24 @@
-import Header from "./components/header/header";
+
 import HeroSection from "./components/hero-section/HeroSection";
-import ShareBar from "./components/share-bar/ShareBar";
-import CountriesCards from "./components/countries-cards/CountriesCards";
+
+
+// import CountriesCards from "./components/countries-cards/CountriesCards";
 
 
 
-const App :React.FC = () => {
+
+
+import Layout from "./components/layout/Layout";
+
+const App: React.FC = () => {
   return (
     <>
-    <Header />
-    <HeroSection />
-    <ShareBar />
-    <CountriesCards />
-  </>
-  )
-}
+      <Layout>
+        <HeroSection />
 
-
+      </Layout>
+    </>
+  );
+};
 
 export default App;

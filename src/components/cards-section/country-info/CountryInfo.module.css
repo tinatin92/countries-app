@@ -1,0 +1,35 @@
+.countrie-text {
+  display: flex;
+  gap: 6px;
+}
+
+.countrie-text div:first-of-type {
+  width: 25%;
+  font-weight: 700;
+  font-size: 16px;
+}
+.countrie-text div:last-of-type {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+@media (max-width: 1620px) {
+}
+@media (max-width: 1400px) {
+}
+@media (max-width: 1200px) {
+  .countrie-text div:first-of-type {
+    width: 33%;
+  }
+}
+@media (max-width: 992px) {
+}
+@media (max-width: 768px) {
+  .countrie-text div:first-of-type {
+    width: 40%;
+  }
+}
+@media (max-width: 576px) {
+}
+@media (max-width: 440px) {
+}

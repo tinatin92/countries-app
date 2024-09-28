@@ -1,0 +1,27 @@
+.info {
+  padding: 32px;
+  border: 1px solid #000;
+  border-radius: 0 0 16px 16px;
+}
+.info h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #000;
+}
+
+@media (max-width: 1620px) {
+}
+@media (max-width: 1400px) {
+}
+@media (max-width: 1200px) {
+}
+@media (max-width: 992px) {
+}
+@media (max-width: 768px) {
+}
+@media (max-width: 576px) {
+}
+@media (max-width: 440px) {
+}

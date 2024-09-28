@@ -1,6 +1,6 @@
 header {
     position: absolute;
- 
+    width: 1620px;
     top: 0;
     z-index: 30;
     left: 50%;
@@ -68,10 +68,30 @@ header {
     background-color: transparent;
     cursor: pointer;
   }
-
-
+  @media (max-width: 1620px) {
+    header{
+      width: 1320px;
+    }
+  
+  }
+  @media (max-width: 1400px) {
+    header{
+      width: 1140px;
+    }
+  
+  }
+  @media (max-width: 1400px) {
+    header{
+      width: 960px;
+    }
+  
+  }
 
   @media (max-width: 992px) {
+    header{
+      width: 720px;
+    }
+  
     .navigation nav{
      display: none;
     }
@@ -80,6 +100,10 @@ header {
   }
 
   @media (max-width: 576px) {
+     header {
+      width: 100%;
+      padding: 0 12px;
+     }
     .search input{
       display: none;
     }

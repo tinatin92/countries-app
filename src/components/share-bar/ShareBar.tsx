@@ -1,7 +1,7 @@
 import classes from './ShareBar.module.css'
-import facebookIcon from "../../assets/facebook.svg";
-import instagramIcon from "../../assets/instagram.svg";
-import twitterIcon from "../../assets/twitter.svg";
+import facebookIcon from "@/assets/facebook.svg";
+import instagramIcon from "@/assets/instagram.svg";
+import twitterIcon from "@/assets/twitter.svg";
 
 
 const ShareBar: React.FC = () =>{

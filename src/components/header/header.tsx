@@ -1,8 +1,8 @@
 import React from "react";
 
 import Container from "../UI/container/Container";
-import headerLogo from "../../assets/logo.svg";
-import searchIcon from "../../assets/Search.svg";
+import headerLogo from "@/assets/logo.svg";
+import searchIcon from "@/assets/Search.svg";
 import classes from "./header.module.css";
 
 

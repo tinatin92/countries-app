@@ -9,35 +9,31 @@ import CountryInfo from "../country-info/CountryInfo";
 import InfoBody from "../country-info-body/InfoBody";
 import Row from "../../UI/row/Row";
 
-import countrieJapan from "../../../assets/japan 2.png";
-
-const COUNTRIES__DATA: {
+const CountriesCards: React.FC<{
   title: string;
-  capital: string;
-  population: number;
   image: string;
-} = {
-  image: countrieJapan,
-  title: "Japan",
-  capital: "Tokyo",
-  population: 125100000,
-};
-
-const populationFormatted = COUNTRIES__DATA.population.toLocaleString();
-
-const CountriesCards: React.FC = () => {
+  capital: string;
+  population: string;
+}> = ({ title, image, capital, population }) => {
   return (
     <section className={classes.countries}>
       <Container>
         <H1 heading="Countries" />
         <Row className={classes["card-row"]}>
           <Card>
-            <CardImage image={COUNTRIES__DATA.image} />
+            <CardImage>
+              <img src={image} alt={title} />
+            </CardImage>
             <CardInfo>
-              <h2>{COUNTRIES__DATA.title}</h2>
+              <h2>{title}</h2>
               <InfoBody>
-                <CountryInfo info={COUNTRIES__DATA.capital} />
-                <CountryInfo info={populationFormatted} />
+                <CountryInfo>
+                  <div>Capital:</div> {capital}
+                </CountryInfo>
+                <CountryInfo>
+                  <div>Population:</div>
+                  {population}
+                </CountryInfo>
               </InfoBody>
             </CardInfo>
           </Card>

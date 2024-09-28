@@ -1,23 +1,23 @@
-import heroImage from "../../assets/japan.webp";
+
 import classes from "./HeroSection.module.css";
 import Container from "../UI/container/Container";
 import HeroInfo from "./hero-info/HeroInfo";
 import ShareBar from "../share-bar/ShareBar";
 
-const HERO_SECTION__DATA: { title: string; text: string } = {
-  title: "Around the word",
-  text: "Discover cultures, landscapes, and stories from every country.Dive into unique traditions, local cuisines, and hidden gems that make our globe extraordinary.",
-};
 
-const HeroSection: React.FC = () => {
+
+const HeroSection: React.FC<{title:string,text:string,image:string}> = ({title,text,image}) => {
   return (
     <section className={classes["hero-section"]}>
-        <ShareBar />
+      <ShareBar />
       <Container>
-       <HeroInfo title={HERO_SECTION__DATA.title} text={HERO_SECTION__DATA.text} />
+        <HeroInfo>
+          <h1>{title}</h1>
+          <div>{text}</div>
+        </HeroInfo>
       </Container>
-      <div className={classes['hero-image']}>
-        <img src={heroImage} alt="Country image" />
+      <div className={classes["hero-image"]}>
+        <img src={image} alt="Country image" />
       </div>
     </section>
   );

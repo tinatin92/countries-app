@@ -1,12 +1,8 @@
-import classes from './CountryInfo.module.css'
+import classes from "./CountryInfo.module.css";
+import { PropsWithChildren } from "react";
 
-const CountryInfo:React.FC<{info : string}> = ({info}) => {
-   return (
-    <div className={classes["countrie-text"]}>
-                  <div>Capital:</div>
-                  <div>{info}</div>
-                </div>
-   )
-}
+const CountryInfo: React.FC<PropsWithChildren> = ({ children }) => {
+  return <div className={classes["countrie-text"]}>{children}</div>;
+};
 
-export default CountryInfo
+export default CountryInfo;

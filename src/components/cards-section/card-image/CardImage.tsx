@@ -1,11 +1,12 @@
 import classes from './CardImage.module.css'
+import { PropsWithChildren } from 'react'
 
 
-const CardImage :React.FC<{image: string}> = ({image}) =>{
+const CardImage :React.FC<PropsWithChildren> = ({children}) =>{
  
     return (
         <div className={classes.image}>
-              <img src={image} alt="" />
+             {children}
             </div>
     )
 }

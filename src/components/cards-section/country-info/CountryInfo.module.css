@@ -4,7 +4,7 @@
 }
 
 .countrie-text div:first-of-type {
-  width: 25%;
+  width: 30%;
   font-weight: 700;
   font-size: 16px;
 }
@@ -16,17 +16,18 @@
 @media (max-width: 1620px) {
 }
 @media (max-width: 1400px) {
+  .countrie-text div:first-of-type {
+    width: 40%;
+  }
 }
 @media (max-width: 1200px) {
-  .countrie-text div:first-of-type {
-    width: 33%;
-  }
+  
 }
 @media (max-width: 992px) {
 }
 @media (max-width: 768px) {
   .countrie-text div:first-of-type {
-    width: 40%;
+    width: 30%;
   }
 }
 @media (max-width: 576px) {

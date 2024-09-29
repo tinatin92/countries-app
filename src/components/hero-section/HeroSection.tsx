@@ -1,12 +1,13 @@
-
 import classes from "./HeroSection.module.css";
-import Container from "../UI/container/Container";
-import HeroInfo from "./hero-info/HeroInfo";
+import { Container } from "../UI/container";
+import { HeroInfo } from "./hero-info/HeroInfo";
 import ShareBar from "../share-bar/ShareBar";
 
-
-
-const HeroSection: React.FC<{title:string,text:string,image:string}> = ({title,text,image}) => {
+export const HeroSection: React.FC<{
+  title: string;
+  text: string;
+  image: string;
+}> = ({ title, text, image }) => {
   return (
     <section className={classes["hero-section"]}>
       <ShareBar />
@@ -22,5 +23,3 @@ const HeroSection: React.FC<{title:string,text:string,image:string}> = ({title,t
     </section>
   );
 };
-
-export default HeroSection;

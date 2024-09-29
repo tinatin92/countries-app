@@ -2,7 +2,7 @@ import classes from './CardImage.module.css'
 import { PropsWithChildren } from 'react'
 
 
-const CardImage :React.FC<PropsWithChildren> = ({children}) =>{
+export const CardImage :React.FC<PropsWithChildren> = ({children}) =>{
  
     return (
         <div className={classes.image}>
@@ -11,4 +11,3 @@ const CardImage :React.FC<PropsWithChildren> = ({children}) =>{
     )
 }
 
-export default CardImage

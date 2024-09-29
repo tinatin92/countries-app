@@ -6,11 +6,10 @@ interface RowProps extends PropsWithChildren {
     className?: string; 
   }
 
-const Row :React.FC<RowProps> = ({children, className}) =>{
+export const Row :React.FC<RowProps> = ({children, className}) =>{
 
   const  classe = `${classes.flex} ${className}`
 
     return <div className={classe}>{children}</div>
 }
 
-export default Row

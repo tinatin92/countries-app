@@ -1,16 +1,16 @@
 import classes from "./CountriesCards.module.css";
-import Container from "@/components/UI/container/Container";
+import { Container } from "@/components/UI/container";
 
-import H1 from "@/components/h1/H1";
-import Card from "../card/Card";
-import CardImage from "../card-image/CardImage";
-import CardInfo from "../card-info/CardInfo";
-import CountryInfo from "../country-info/CountryInfo";
-import InfoBody from "../country-info-body/InfoBody";
+import { H1 } from "@/components/h1";
+import { Card } from "../card/Card";
+import { CardImage } from "../image/CardImage";
+import { CardInfo } from "../card-info/CardInfo";
+import { CountryInfo } from "../country-info/CountryInfo";
+import { InfoBody } from "../info-body/InfoBody";
 
-import Row from "@/components/UI/row/Row";
+import { Row } from "@/components/UI/row";
 
-const CountriesCards: React.FC<{
+export const CountriesCards: React.FC<{
   title: string;
   image: string;
   capital: string;
@@ -43,5 +43,3 @@ const CountriesCards: React.FC<{
     </section>
   );
 };
-
-export default CountriesCards;

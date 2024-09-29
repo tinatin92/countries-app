@@ -1,10 +1,9 @@
-import HeroSection from "@/components/hero-section/HeroSection";
-import CountriesCards from "@/components/cards-section/countries-cards/CountriesCards";
-import Layout from "@/components/layout/Layout";
+import { HeroSection } from "@/components/hero-section";
+import { CountriesCards } from "@/components/cards-section";
+import { Layout } from "@/components/layout";
 
 import heroImage from "@/assets/japan.png";
 import countrieJapan from "@/assets/japan 2.png";
-
 
 const HERO_SECTION__DATA: { title: string; text: string; image: string } = {
   title: "Around the word",

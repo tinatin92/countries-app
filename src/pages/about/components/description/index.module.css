@@ -1,0 +1,53 @@
+.about-section {
+  margin: 200px 0 400px 0;
+  position: relative;
+}
+.container {
+  display: flex;
+ 
+  align-items: flex-start;
+  gap: 90px;
+}
+.description {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.description h1 {
+  line-height: 120%;
+  font-size: 56px;
+  font-weight: 600;
+}
+
+.description div {
+  font-size: 20px;
+}
+.image {
+  position: absolute;
+  top: 65px;
+  right: 0;
+  width: 650px;
+}
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 30px 0 0 30px;
+  
+}
+.image::after {
+  content: "";
+  position: absolute;
+  inset: -60px;
+  border: 1px solid #000;
+  border-radius: 32px 0 0 32px;
+  z-index: -1;
+  animation: scaleIn 0.6s forwards;
+  transform: scale(0);
+}
+@keyframes scaleIn {
+    to {
+      transform: scale(1);
+    }
+  }

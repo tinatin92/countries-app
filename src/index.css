@@ -23,12 +23,13 @@ body {
   min-height: 100vh;
   font-size: 18px;
   line-height: 150%;
+  overflow-x: hidden;
 }
 
 *{
   font-family: "Urbanist", system-ui;
   box-sizing: border-box;
-  
+  line-height: 150%;
 }
 
 h1,h2,h3,h4,h5,h6{
@@ -43,4 +44,23 @@ img{
   max-width: 100%;
   height: auto;
 }
+::-webkit-scrollbar {
+  width: 10px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #000;
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #232323;
+}

@@ -1,6 +1,15 @@
+
+import {  Routes, Route } from 'react-router-dom'
+
+import DefaultLayout from './layouts/default';
+import AboutView from './pages/about/views/about';
+
+
 import { HeroSection } from "@/components/hero-section";
 import { CountriesCards } from "@/components/cards-section";
-import { Layout } from "@/components/layout";
+
+
+
 
 import heroImage from "@/assets/japan.png";
 import countrieJapan from "@/assets/japan 2.png";
@@ -23,12 +32,30 @@ const COUNTRIES__DATA: {
   population: 125100000,
 };
 
-const populationFormatted = COUNTRIES__DATA.population.toLocaleString();
+// const populationFormatted = COUNTRIES__DATA.population.toLocaleString();
 
 const App: React.FC = () => {
   return (
-    <>
-      <Layout>
+   <Routes>
+    <Route element={<DefaultLayout />}>
+      <Route path='/' element={<HeroSection {...HERO_SECTION__DATA} />} />
+      <Route path='about' element={<AboutView />}/>
+
+
+    </Route>
+
+
+   </Routes>
+
+   
+  );
+};
+
+export default App;
+
+/* 
+ <>
+      
         <HeroSection
           title={HERO_SECTION__DATA.title}
           text={HERO_SECTION__DATA.text}
@@ -40,9 +67,5 @@ const App: React.FC = () => {
           capital={COUNTRIES__DATA.capital}
           population={populationFormatted}
         />
-      </Layout>
-    </>
-  );
-};
-
-export default App;
+     
+    </> */

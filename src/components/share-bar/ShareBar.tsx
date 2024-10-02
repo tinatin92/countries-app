@@ -3,20 +3,22 @@ import facebookIcon from "@/assets/facebook.svg";
 import instagramIcon from "@/assets/instagram.svg";
 import twitterIcon from "@/assets/twitter.svg";
 
+import { Link } from 'react-router-dom';
+
 
 const ShareBar: React.FC = () =>{
     return (
         <div className={classes['share-bar']}>
         <div className={classes.share}>
-          <a href="#">
+          <Link to="#">
             <img src={facebookIcon} alt="facebook" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <img src={instagramIcon} alt="instagram" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <img src={twitterIcon} alt="twitter" />
-          </a>
+          </Link>
         </div>
       </div>
     )

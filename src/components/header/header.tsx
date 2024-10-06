@@ -28,6 +28,7 @@ export const Header: React.FC = () => {
           <div className={classes.navigation}>
             <nav>
              <NavLink to='/about' className={handleActiveNav}>About AllGlobe</NavLink>
+             <NavLink to='/contact' className={handleActiveNav}>Contact</NavLink>
             </nav>
           </div>
           <div className={classes.search}>

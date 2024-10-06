@@ -1,7 +1,8 @@
-.country-box {
+.country-box{
   width: 33.3%;
   overflow: hidden;
   border-radius: 16px;
+  display: block;
 }
 
 .country-box:hover  img{
@@ -14,7 +15,7 @@
 }
 @media (max-width: 1200px) {
   .country-box {
-    width: 50%;
+    width:50%;
   }
 }
 @media (max-width: 992px) {

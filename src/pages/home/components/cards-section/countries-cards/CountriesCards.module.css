@@ -25,6 +25,9 @@
   .countrie-text div:first-of-type {
     width: 33%;
   }
+  .card-row{
+    flex-wrap: wrap;
+  }
 }
 @media (max-width: 992px) {
   .countries-row {

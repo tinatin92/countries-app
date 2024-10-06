@@ -1,0 +1,63 @@
+.contact{
+    margin: 200px 0;
+}
+
+.contact form {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 50%;
+  margin-left: auto;
+}
+.input-box,
+.textarea {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-box input,
+.textarea textarea {
+    padding: 12px;
+    border: none;
+    border-bottom: 1px solid #000;
+    font-size: 18px;
+}
+.textarea textarea {
+    height: 150px;
+    resize: none;
+}
+.input-box input:focus,
+.textarea textarea:focus {
+    outline: none;
+}
+.input-box label,
+.textarea  label{
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+.button{
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #000;
+    border-radius: 50px;
+    width: 50%;
+    align-self: center;
+    cursor: pointer;
+    transition: all .3s;
+}
+.button:hover{
+    background-color: #fff;
+    color: #000;
+}
+.contact img{
+    position: absolute;
+    width: 1050px;
+    height: 1050px;
+    top: -100px;
+    left: -100px;
+}

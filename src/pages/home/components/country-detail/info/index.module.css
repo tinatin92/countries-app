@@ -1,0 +1,22 @@
+
+.info{
+    width: 50%;
+
+}
+.info h2{
+    font-size: 36px;
+    display: block;
+    margin-bottom: 56px;
+    position: relative;
+
+}
+.info h2::after{
+    position: absolute;
+    content: '';
+    width: 60%;
+    height: 1px;
+    background-color: #000;
+    bottom: 0;
+    left: 0;
+}
+

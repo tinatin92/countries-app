@@ -1,10 +1,9 @@
 import AboutDescription from "../../components/description/index";
-import Image from '../../components/image/index'
+import Image from "../../components/image/index";
 import aboutImage from "@/assets/aboutpage.png";
 import { Container } from "@/components/UI/container";
 
-
-import classes from './index.module.css'
+import classes from "./index.module.css";
 
 const ABOUT_PAGE__DATA = {
   title: "About AllGlobe",
@@ -16,12 +15,11 @@ const ABOUT_PAGE__DATA = {
 const AboutView: React.FC = () => {
   return (
     <section className={classes["about-section"]}>
-        <Container>
-      <div className={classes.container}>
-        <AboutDescription {...ABOUT_PAGE__DATA }/>
-        <Image {...ABOUT_PAGE__DATA }/>
-
-      </div>
+      <Container>
+        <div className={classes.container}>
+          <AboutDescription {...ABOUT_PAGE__DATA} />
+          <Image {...ABOUT_PAGE__DATA} />
+        </div>
       </Container>
     </section>
   );

@@ -1,26 +1,53 @@
 import { Routes, Route } from "react-router-dom";
-
-import DefaultLayout from "./layouts/default";
-import AboutView from "./pages/about/views/about";
-import HomeView from "./pages/home/view/home";
-import ContactPage from "./pages/contact/views/contact";
-import CountrieDetailPage from "./pages/home/view/country-detail";
-
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
+const DefaultLayout = lazy(() => import("./layouts/default"));
+const AboutView = lazy(() => import("./pages/about/views/about"));
+const HomeView = lazy(() => import("./pages/home/view/home"));
+const ContactPage = lazy(() => import("./pages/contact/views/contact"));
+const CountrieDetailPage = lazy(() => import("./pages/home/view/country-detail"));
 
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route element={<DefaultLayout />}>
-        <Route path="/" element={
-          <Suspense fallback={<p>Here Shoul be home page</p>}>
-            <HomeView />
-
+      <Route
+        element={
+          <Suspense fallback={<p>Loading layout...</p>}>
+            <DefaultLayout />
           </Suspense>
-        } />
-        <Route path="/countriedetail/:id" element={<CountrieDetailPage />}/>
-        <Route path="about" element={<AboutView />} />
-        <Route path="contact" element={<ContactPage />}/>
+        }
+      >
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<p>Loading home page...</p>}>
+              <HomeView />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/countriedetail/:id"
+          element={
+            <Suspense fallback={<p>Loading country detail...</p>}>
+              <CountrieDetailPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="about"
+          element={
+            <Suspense fallback={<p>Loading about page...</p>}>
+              <AboutView />
+            </Suspense>
+          }
+        />
+        <Route
+          path="contact"
+          element={
+            <Suspense fallback={<p>Loading contact page...</p>}>
+              <ContactPage />
+            </Suspense>
+          }
+        />
       </Route>
     </Routes>
   );

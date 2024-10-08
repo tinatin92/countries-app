@@ -13,14 +13,7 @@ import { Row } from "@/components/UI/row";
 import { COUNTRIES__DATA } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
 
-// interface CountryData {
-//   title: string;
-//   image: string;
-//   capital: string;
-//   population: string;
-//   id: string;
-//   like: number
-// }
+
 
 const CountriesCards: React.FC = () => {
   const [countries, setCountries] = useState(COUNTRIES__DATA);

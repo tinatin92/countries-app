@@ -9,6 +9,7 @@ const About: React.FC<{
     <div className={classes.description}>
     <h1>{title}</h1>
     <div>{description}</div>
+    
   </div>
     
   );

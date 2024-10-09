@@ -10,8 +10,22 @@
 }
 
 
+.seemore{
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 24px;
+  display: block;
+  transition: all .3s;
+}
+.seemore:hover{
+  text-decoration: underline;
+}
 
-
+.heading{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 
 @media (max-width: 1620px) {

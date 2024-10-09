@@ -9,15 +9,14 @@ import { CardInfo } from "../card-info/CardInfo";
 import { CountryInfo } from "../country-info/CountryInfo";
 import { InfoBody } from "../info-body/InfoBody";
 import { Row } from "@/components/UI/row";
+import LikeBox from "../like";
+import SortButton from "../sort-button";
 
 import { COUNTRIES__DATA } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
 
-
-
 const CountriesCards: React.FC = () => {
   const [countries, setCountries] = useState(COUNTRIES__DATA);
-  
 
   const handleLike = (id: string) => {
     const copiedCountriesList = countries.map((country) => {
@@ -31,18 +30,21 @@ const CountriesCards: React.FC = () => {
   };
 
   const handleSortCards = () => {
-    const sortedCountries = [...countries].sort((a,b) =>{
-      return b.like - a.like
-    })
+    const sortedCountries = [...countries].sort((a, b) => {
+      return b.like - a.like;
+    });
 
-    setCountries(sortedCountries)
-  }
+    setCountries(sortedCountries);
+  };
 
   return (
     <section className={classes.countries}>
       <Container>
-        <H1 heading="Countries" />
-        <button onClick={handleSortCards}>Sort</button>
+        <div className={classes.heading}>
+          <H1 heading="Countries" />
+
+          <SortButton onClick={handleSortCards} />
+        </div>
         <Row className={classes["card-row"]}>
           {countries.map((country) => (
             <Card key={country.id}>
@@ -52,8 +54,11 @@ const CountriesCards: React.FC = () => {
               <CardInfo>
                 <h2>{country.title}</h2>
                 <InfoBody>
-                  <button onClick={() => handleLike(country.id)}>Like</button>
-                  <span>{country.like}</span>
+                  <LikeBox
+                    like={country.like}
+                    onClick={() => handleLike(country.id)}
+                  />
+
                   <CountryInfo>
                     <div>Capital:</div> {country.capital}
                   </CountryInfo>
@@ -61,8 +66,14 @@ const CountriesCards: React.FC = () => {
                     <div>Population:</div>
                     {country.population.toLocaleString()}
                   </CountryInfo>
-                  <Link to={`/countriedetail/${country.id}`}>See more</Link>
                 </InfoBody>
+
+                <Link
+                  className={classes.seemore}
+                  to={`/countriedetail/${country.id}`}
+                >
+                  See more
+                </Link>
               </CardInfo>
             </Card>
           ))}

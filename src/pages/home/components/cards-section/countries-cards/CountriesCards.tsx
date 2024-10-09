@@ -17,6 +17,7 @@ import { Link } from "react-router-dom";
 
 const CountriesCards: React.FC = () => {
   const [countries, setCountries] = useState(COUNTRIES__DATA);
+  const [sortCountry, setSortCountry] = useState(false)
 
   const handleLike = (id: string) => {
     const copiedCountriesList = countries.map((country) => {
@@ -30,8 +31,15 @@ const CountriesCards: React.FC = () => {
   };
 
   const handleSortCards = () => {
+    setSortCountry(prev => !prev)
+   
     const sortedCountries = [...countries].sort((a, b) => {
-      return b.like - a.like;
+      if(sortCountry){
+        return a.like - b.like;
+      }else{
+        return b.like - a.like;
+      }
+    
     });
 
     setCountries(sortedCountries);

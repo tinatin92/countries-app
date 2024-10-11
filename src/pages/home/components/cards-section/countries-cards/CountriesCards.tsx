@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useReducer, useState } from "react";
 
 import AddCountry from "../add-card";
 import classes from "./CountriesCards.module.css";
@@ -12,14 +12,18 @@ import { InfoBody } from "../info-body/InfoBody";
 import { Row } from "@/components/UI/row";
 import LikeBox from "../like";
 import Button from "../sort-button";
+import { countriesReduser } from '../reducer/reducer'
 
 import { COUNTRIES__DATA } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
-// import image from "../../country-detail/image";
+
 import damyImage from "@/assets/japan 2.png";
 
 const CountriesCards: React.FC = () => {
-  const [countries, setCountries] = useState(COUNTRIES__DATA);
+   
+  const [countriesList, dispatch] = useReducer(countriesReduser, COUNTRIES__DATA)
+
+  // const [countries, setCountries] = useState(COUNTRIES__DATA);
   const [isCountryVisible, setIsCountryVisible] = useState(false); 
 
   const handleLike = (id: string) => {

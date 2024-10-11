@@ -1,12 +1,33 @@
-.country-box{
-  width: 33.3%;
+.country-box {
+  width: calc((100% - (2 * 20px)) / 3);
   overflow: hidden;
   border-radius: 16px;
   display: block;
+  position: relative;
 }
 
-.country-box:hover  img{
+.country-box:hover img {
   filter: grayscale(0%);
+}
+.country-box.border::after {
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  height: 35%;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #ff625e;
+  position: absolute;
+  content: "This country is deleted";
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  
+ 
 }
 
 @media (max-width: 1620px) {
@@ -15,7 +36,7 @@
 }
 @media (max-width: 1200px) {
   .country-box {
-    width:50%;
+    width: 50%;
   }
 }
 @media (max-width: 992px) {
@@ -26,7 +47,6 @@
   }
 }
 @media (max-width: 576px) {
-  
 }
 @media (max-width: 440px) {
 }

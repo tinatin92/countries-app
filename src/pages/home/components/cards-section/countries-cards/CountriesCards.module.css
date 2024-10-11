@@ -4,6 +4,7 @@
 .card-row {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 20px;
   padding: 100px 0 0 0;
 
@@ -26,7 +27,17 @@
   align-items: center;
   justify-content: space-between;
 }
-
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 0;
+}
+.header-buttons{
+  display: flex;
+  align-items: center;
+  gap: 44px;
+}
 
 @media (max-width: 1620px) {
   .countries {

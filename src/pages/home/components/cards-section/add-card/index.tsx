@@ -16,14 +16,18 @@ const AddCountry: React.FC<ArticleCreateFormProps> = ({ onSubmit, isPressed}) =>
           <input type="text" name="title" id="title" />
         </div>
         <div>
+          <label htmlFor="title">Capital</label>
+          <input type="text" name="capital" id="capital" />
+        </div>
+        <div>
           <label htmlFor="num">Country Population</label>
-          <input type="number" name="num" id="num" />
+          <input type="number" name="population" id="population" />
         </div>
         <div>
           <label htmlFor="description">Country Description</label>
           <textarea name="description" id="description"></textarea>
         </div>
-        <button>Sumbit</button>
+        <button>Submit</button>
       </form>
     </div>
   );

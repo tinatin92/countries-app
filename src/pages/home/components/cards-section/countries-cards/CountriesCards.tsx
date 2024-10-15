@@ -11,15 +11,15 @@ import { InfoBody } from "../info-body/InfoBody";
 import { Row } from "@/components/UI/row";
 import LikeBox from "../like";
 import Button from "../sort-button";
-import { countriesReducer } from "../reducer/reducer";
+import { countriesReduser } from "../reducer/reducer";
 
 import { COUNTRIES__DATA as initialCountries } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
 
-import damyImage from "@/assets/japan 2.png";
+
 
 const CountriesCards: React.FC = () => {
-  const [countriesList, dispatch] = useReducer(countriesReducer, initialCountries);
+  const [countriesList, dispatch] = useReducer(countriesReduser, initialCountries);
   const [isCountryVisible, setIsCountryVisible] = useState(false);
 
 
@@ -35,20 +35,25 @@ const CountriesCards: React.FC = () => {
 
   const handleAddCountry = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const newCountry: { [key: string]: FormDataEntryValue } = {};
+    const newCountry: { [key: string]: FormDataEntryValue | string } = {};
     const formData = new FormData(e.currentTarget);
 
     for (const [key, value] of formData) {
       newCountry[key] = value;
     }
 
+    const imageFile = formData.get('image') as File | null;
+    const image = imageFile? URL.createObjectURL(imageFile) : ''
+
+
     dispatch({
       type: "add",
       payload: {
         ...newCountry,
-        image: damyImage,
+        image,
         like: 0,
         id: Number(countriesList.at(-1)?.id) + 1,
+  
       },
     });
     setIsCountryVisible(false);

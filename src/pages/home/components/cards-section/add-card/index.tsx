@@ -27,6 +27,10 @@ const AddCountry: React.FC<ArticleCreateFormProps> = ({ onSubmit, isPressed}) =>
           <label htmlFor="description">Country Description</label>
           <textarea name="description" id="description"></textarea>
         </div>
+        <div className={classes.image}>
+          <label htmlFor="image">Country image</label>
+          <input type="file" id="image" name="image" accept="image/*" />
+        </div>
         <button>Submit</button>
       </form>
     </div>

@@ -20,7 +20,7 @@ type Country = {
   
 
 
-export const countriesReducer = (
+export const countriesReduser = (
     countries: countriesType,
     action: actionsType
   ): countriesType => {
@@ -28,7 +28,7 @@ export const countriesReducer = (
     
     if (action.type === "upLike") {
       return countries.map((country) => {
-        if (country.id === action.payload.id) {
+        if (country.id === action.payload.id && !country.isMarkedForDelete) {
           return { ...country, like: country.like + 1 };
         }
         return country;

@@ -3,23 +3,62 @@ import { Container } from "@/components/UI/container";
 import { Row } from "@/components/UI/row";
 
 import backgroundImage from "@/assets/Groupglobe.svg";
+import { useState } from "react";
 
 const Contact: React.FC = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); 
+  const [errors, setErrors] = useState({
+     name: false,
+     lastName: false,
+     email: false,
+     message:false
+  })
+  const [contactForm, setContactForm ] = useState({
+    name: '',
+    lastName:'',
+    email:'',
+    message:''
+  })
 
-    const form = event.currentTarget;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {name, value } = e.target
+    setContactForm((prev) => ({
+      ...prev,
+      [name]: value
+    }))
 
-    const formData = new FormData(form)
+    if (value.trim().length > 0) {
+      setErrors((prev) => ({ ...prev, [name]: false }));
+    }
+  }
 
-    const contactInfo = {
-      name: formData.get('name') as string,
-      lastName: formData.get('lastname') as string,
-      email: formData.get('email') as string,
-      message: formData.get('message') as string
-    };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); 
 
-    console.log(contactInfo); 
+    const formError = {
+      name: contactForm.name.trim().length === 0,
+      lastName: contactForm.lastName.trim().length === 0 ,
+      email: contactForm.email.trim().length === 0 ,
+      message: contactForm.message.trim().length === 0
+
+    }
+   
+    setErrors(formError)
+    
+
+    if(Object.values(formError).some((error) => error)){
+     
+      return
+    
+    }
+
+    setContactForm({
+      name: '',
+      lastName:'',
+      email:'',
+      message:''
+    })
+
+    console.log(contactForm); 
   };
 
 
@@ -32,19 +71,23 @@ const Contact: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <div className={classes["input-box"]}>
               <label htmlFor="name">Name</label>
-              <input type="text" name="name" id="name" />
+              <input value={contactForm.name} onChange={handleChange} type="text" name="name" id="name" />
+              {errors.name && <p className={classes.error}>please enter name</p>}
             </div>
             <div className={classes["input-box"]}>
               <label htmlFor="lastname">Last Name</label>
-              <input type="text" name="lastname" id="lastname" />
+              <input value={contactForm.lastName} onChange={handleChange} type="text" name="lastName" id="lastname" />
+              {errors.lastName && <p className={classes.error}>please enter Last Name</p>}
             </div>
             <div className={classes["input-box"]}>
               <label htmlFor="email">Email</label>
-              <input type="email" name="email" id="email" />
+              <input value={contactForm.email} onChange={handleChange} type="email" name="email" id="email" />
+              {errors.email && <p className={classes.error}>please enter Email</p>}
             </div>
             <div className={classes.textarea}>
-              <label htmlFor="name">Message</label>
-              <textarea name="message" id="message"></textarea>
+              <label htmlFor="message">Message</label>
+              <textarea value={contactForm.message} onChange={handleChange} name="message" id="message"></textarea>
+              {errors.message && <p className={classes.error}>please enter Message</p>}
             </div>
             <button className={classes.button} type="submit">
               Send

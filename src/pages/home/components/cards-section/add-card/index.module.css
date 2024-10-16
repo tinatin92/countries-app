@@ -77,3 +77,13 @@ transition: all .3s;
   background-color: #000;
   color: #fff;
 }
+.form.error input,
+.form.error textarea {
+  border: 2px solid red;
+}
+.error-text{
+  color: red;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}

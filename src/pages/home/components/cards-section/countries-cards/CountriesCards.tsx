@@ -1,4 +1,4 @@
-import { FormEvent, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import AddCountry from "../add-card";
 import classes from "./CountriesCards.module.css";
 import { Container } from "@/components/UI/container";
@@ -16,64 +16,62 @@ import { countriesReduser } from "../reducer/reducer";
 import { COUNTRIES__DATA as initialCountries } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
 
-
-
 const CountriesCards: React.FC = () => {
-  const [countriesList, dispatch] = useReducer(countriesReduser, initialCountries);
+  const [countriesList, dispatch] = useReducer(
+    countriesReduser,
+    initialCountries
+  );
   const [isCountryVisible, setIsCountryVisible] = useState(false);
-
+  
 
   const handleLike = (id: string) => {
     dispatch({ type: "upLike", payload: { id } });
   };
 
-  
   const handleSortCards = () => {
     dispatch({ type: "sort" });
   };
 
+  const handleAddCountry = (countryFields: {
+    title: string;
+    description: string;
+    population: string;
+    capital: string;
+    image: string;
+  }) => {
 
-  const handleAddCountry = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const newCountry: { [key: string]: FormDataEntryValue | string } = {};
-    const formData = new FormData(e.currentTarget);
+   
+    
 
-    for (const [key, value] of formData) {
-      newCountry[key] = value;
-    }
-
-    const imageFile = formData.get('image') as File | null;
-    const image = imageFile? URL.createObjectURL(imageFile) : ''
 
 
     dispatch({
       type: "add",
       payload: {
-        ...newCountry,
-        image,
+        ...countryFields,
         like: 0,
         id: Number(countriesList.at(-1)?.id) + 1,
-  
       },
     });
     setIsCountryVisible(false);
   };
 
-
   const handleDeleteCountry = (id: string) => {
     dispatch({ type: "delete", payload: { id } });
   };
-
 
   const handleRestoreCountry = (id: string) => {
     dispatch({ type: "restore", payload: { id } });
   };
 
-  
   const handleCountryVisibility = () => {
-    setIsCountryVisible((prev) => !prev);
+    
+      setIsCountryVisible((prev) => !prev);
+    
   };
 
+  
+   
   return (
     <section className={classes.countries}>
       <Container>

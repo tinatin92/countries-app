@@ -7,6 +7,7 @@ type Country = {
     id: string;
     like: number;
     isMarkedForDelete: boolean;
+    originalIndex?: number
   };
   
   type countriesType = Country[];
@@ -98,6 +99,7 @@ export const countriesReduser = (
     }
   
     if (action.type === "add") {
+      
       return [...countries, action.payload];
     }
   

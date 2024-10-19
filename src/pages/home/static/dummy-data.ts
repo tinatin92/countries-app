@@ -4,16 +4,24 @@ import countrieEngland from '@/assets/london 2.webp';
 import countrieFrance from '@/assets/paris 2.jpeg';
 
 export const HERO_SECTION__DATA: {
-  title: string;
-  text: string;
-  image: string;
-
+  [key: string]: {
+    title: string;
+    text: string;
+    image: string;
+  };
 } = {
-  title: "Around the world",
-  text: "Discover cultures, landscapes, and stories from every country. Dive into unique traditions, local cuisines, and hidden gems that make our globe extraordinary.",
-  image: heroImage,
-
+  "en": {
+    title: "Around the world",
+    text: "Discover cultures, landscapes, and stories from every country. Dive into unique traditions, local cuisines, and hidden gems that make our globe extraordinary.",
+    image: heroImage,
+  },
+  "ka": {
+    title: "მსოფლიოს გარშემო",
+    text: "აღმოაჩინე კულტურები, ლანდშაფტები და ისტორიები ყოველი ქვეყნისგან. შეისწავლე უნიკალური ტრადიციები, ადგილობრივი სამზარეულო და ფარული ძვირფასობები, რაც ჩვენს პლანეტას განსაკუთრებულს ხდის.",
+    image: heroImage,
+  },
 };
+
 
 export const COUNTRIES__DATA: {
   title: string;

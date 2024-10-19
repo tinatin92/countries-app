@@ -20,7 +20,7 @@ const HeroSection: React.FC<{ title: string; text: string; image: string }> = ({
         </HeroInfo>
       </Container>
       <div className={classes["hero-image"]}>
-        <img src={image} alt={title} />
+        <img src={image} alt='hero image' />
       </div>
     </section>
   );

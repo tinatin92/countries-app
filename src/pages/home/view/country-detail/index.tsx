@@ -4,6 +4,7 @@ import { COUNTRIES__DATA } from "../../static/dummy-data.ts";
 
 const CountrieDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  console.log(id)
 
   const countryInfo = COUNTRIES__DATA .find((country) => country.id === id);
 

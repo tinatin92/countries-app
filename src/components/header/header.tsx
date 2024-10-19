@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink,NavLinkRenderProps } from "react-router-dom";
+import { NavLink, NavLinkRenderProps } from "react-router-dom";
 
 import { Container } from "../UI/container";
 import headerLogo from "@/assets/logo.svg";
@@ -7,13 +7,12 @@ import searchIcon from "@/assets/Search.svg";
 import classes from "./header.module.css";
 
 export const Header: React.FC = () => {
-
   const handleActiveNav = (props: NavLinkRenderProps) => {
     const { isActive } = props;
 
     if (isActive) {
       return classes["active"];
-    } 
+    }
   };
 
   return (
@@ -27,8 +26,15 @@ export const Header: React.FC = () => {
           </div>
           <div className={classes.navigation}>
             <nav>
-             <NavLink to='/about' className={handleActiveNav}>About AllGlobe</NavLink>
-             <NavLink to='/contact' className={handleActiveNav}>Contact</NavLink>
+              <NavLink to="/" className={handleActiveNav}>
+                Home
+              </NavLink>
+              <NavLink to="about" className={handleActiveNav}>
+                About AllGlobe
+              </NavLink>
+              <NavLink to="contact" className={handleActiveNav}>
+                Contact
+              </NavLink>
             </nav>
           </div>
           <div className={classes.search}>

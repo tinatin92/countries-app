@@ -2,23 +2,48 @@ import AboutDescription from "../../components/description/index";
 import Image from "../../components/image/index";
 import aboutImage from "@/assets/aboutpage.png";
 import { Container } from "@/components/UI/container";
+import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import classes from "./index.module.css";
 
 const ABOUT_PAGE__DATA = {
-  title: "About AllGlobe",
-  image: aboutImage,
-  description:
-    "Welcome to AllGlobe, your gateway to exploring the worlds diverse cultures, histories, and landscapes. Whether youre planning your next trip or simply curious about different nations, we provide comprehensive insights into countries from all corners of the globe. From detailed guides on geography, population, and languages to the unique traditions and must-visit attractions, AllGlobe is your trusted resource for discovering the world.",
+  "en": {
+    title: "About AllGlobe",
+    image: aboutImage,
+    description:
+      "Welcome to AllGlobe, your gateway to exploring the worlds diverse cultures, histories, and landscapes. Whether you're planning your next trip or simply curious about different nations, we provide comprehensive insights into countries from all corners of the globe. From detailed guides on geography, population, and languages to the unique traditions and must-visit attractions, AllGlobe is your trusted resource for discovering the world.",
+  },
+  "ka": {
+    title: "About la",
+    image: aboutImage,
+    description:
+      "ქართულ Welcome to AllGlobe, your gateway to exploring the worlds diverse cultures, histories, and landscapes. Whether you're planning your next trip or simply curious about different nations, we provide comprehensive insights into countries from all corners of the globe. From detailed guides on geography, population, and languages to the unique traditions and must-visit attractions, AllGlobe is your trusted resource for discovering the world.",
+  }
 };
 
 const AboutView: React.FC = () => {
+  const { lang } = useParams<{ lang: string }>();
+  const [content, setContent] = useState<{ title: string; image: string; description: string } | null>(null);
+
+  useEffect(() => {
+    if (lang === "en" || lang === "ka") {
+      setContent(ABOUT_PAGE__DATA[lang]);
+    } else {
+      setContent(ABOUT_PAGE__DATA.en); 
+    }
+  }, [lang]); 
+
+  if (!content) {
+    return <p>Loading...</p>; 
+  }
+
   return (
     <section className={classes["about-section"]}>
       <Container>
         <div className={classes.container}>
-          <AboutDescription {...ABOUT_PAGE__DATA} />
-          <Image {...ABOUT_PAGE__DATA} />
+          <AboutDescription title={content.title} description={content.description} />
+          <Image image={content.image} title={content.title}/>  
         </div>
       </Container>
     </section>

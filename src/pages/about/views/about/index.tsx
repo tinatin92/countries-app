@@ -15,10 +15,10 @@ const ABOUT_PAGE__DATA = {
       "Welcome to AllGlobe, your gateway to exploring the worlds diverse cultures, histories, and landscapes. Whether you're planning your next trip or simply curious about different nations, we provide comprehensive insights into countries from all corners of the globe. From detailed guides on geography, population, and languages to the unique traditions and must-visit attractions, AllGlobe is your trusted resource for discovering the world.",
   },
   "ka": {
-    title: "About la",
+    title: "ჩვენს შესახებ",
     image: aboutImage,
     description:
-      "ქართულ Welcome to AllGlobe, your gateway to exploring the worlds diverse cultures, histories, and landscapes. Whether you're planning your next trip or simply curious about different nations, we provide comprehensive insights into countries from all corners of the globe. From detailed guides on geography, population, and languages to the unique traditions and must-visit attractions, AllGlobe is your trusted resource for discovering the world.",
+      "კეთილი იყოს თქვენი მობრძანება AllGlobe-ში, თქვენი კარიბჭე მსოფლიოს მრავალფეროვანი კულტურების, ისტორიებისა და პეიზაჟების შესასწავლად. მიუხედავად იმისა, გეგმავთ თქვენს მომავალ მოგზაურობას ან უბრალოდ გაინტერესებთ სხვადასხვა ერების შესახებ, ჩვენ გთავაზობთ ყოვლისმომცველ ინფორმაციას მსოფლიოს ყველა კუთხის ქვეყნების შესახებ. გეოგრაფიის, მოსახლეობისა და ენების დეტალური სახელმძღვანელოებიდან დაწყებული უნიკალური ტრადიციებითა და ღირსშესანიშნაობებით დამთავრებული, AllGlobe არის თქვენი სანდო რესურსი მსოფლიოს აღმოსაჩენად."
   }
 };
 

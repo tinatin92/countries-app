@@ -3,16 +3,28 @@ import { useParams } from "react-router-dom";
 import { COUNTRIES__DATA } from "../../static/dummy-data.ts";
 
 const CountrieDetailPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  console.log(id)
+  const { id, lang } = useParams<{ id: string, lang: string }>();
 
-  const countryInfo = COUNTRIES__DATA .find((country) => country.id === id);
+  // Find the country by ID
+  const countryInfo = COUNTRIES__DATA.find((country) => country.id === id);
 
   if (!countryInfo) {
-    return <p>Country not found!</p>; 
+    return <p>Country not found!</p>;
   }
 
-    return <CountrieDetail {...countryInfo} />;
+  // Set default language to English if none is provided
+  const language = lang === "en" || lang === "ka" ? lang : "en";
+
+  return (
+    <CountrieDetail
+      title={countryInfo.title[language]} // Use translated title
+      capital={countryInfo.capital[language]} // Use translated capital
+      description={countryInfo.description[language]} // Use translated description
+      population={countryInfo.population}
+      image={countryInfo.image}
+      like={countryInfo.like}
+    />
+  );
 };
 
 export default CountrieDetailPage;

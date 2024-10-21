@@ -1,6 +1,6 @@
 .countrie-text {
   display: flex;
-  gap: 6px;
+  gap: 40px;
 }
 
 .countrie-text div:first-of-type {

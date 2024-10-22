@@ -57,26 +57,23 @@
     background-color: #fff;
     color: #000;
 }
-input[type='file'] {
-  display: none;
-}
+/* input[type='file'] {
+  visibility: hidden;
+} */
 .image{
-  border: 1px solid #ccc;
+ 
   display: inline-block;
-  border-radius: 50px;
-  padding: 12px 24px;
-transition: all .3s;
-  border: 1px solid #000;
+ 
+
+ transition: all .3s;
+
   color: #000;
   cursor: pointer;
 }
 .image label{
   cursor: pointer;
 }
-.image:hover{
-  background-color: #000;
-  color: #fff;
-}
+
 .form.error input,
 .form.error textarea {
   border: 2px solid red;

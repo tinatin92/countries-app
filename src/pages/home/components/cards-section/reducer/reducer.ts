@@ -99,8 +99,9 @@ export const countriesReduser = (
     }
   
     if (action.type === "add") {
+      const newCountry = action.payload;
       
-      return [...countries, action.payload];
+      return [...countries, newCountry];
     }
   
     return countries; 

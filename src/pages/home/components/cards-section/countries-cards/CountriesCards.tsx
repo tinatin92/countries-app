@@ -17,7 +17,7 @@ import { countriesReduser } from "../reducer/reducer";
 import { COUNTRIES__DATA as initialCountries } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
 
-import damyImage from "@/assets/japan 2.png";
+
 
 const CountriesCards: React.FC = () => {
 
@@ -37,26 +37,39 @@ const CountriesCards: React.FC = () => {
   };
 
 
-  const handleAddCountry = (e: FormEvent<HTMLFormElement>) => {
+  const handleAddCountry = (e: FormEvent<HTMLFormElement>, countryData: CountryData) => {
     e.preventDefault();
-    const newCountry: { [key: string]: FormDataEntryValue } = {};
-    const formData = new FormData(e.currentTarget);
-
-    for (const [key, value] of formData) {
-      newCountry[key] = value;
-    }
-
+  
+    const newCountry = {
+      title: {
+        en: countryData.title.en,
+        ka: countryData.title.ka,
+      },
+      capital: {
+        en: countryData.capital.en,
+        ka: countryData.capital.ka,
+      },
+      description: {
+        en: countryData.description.en,
+        ka: countryData.description.ka,
+      },
+      population: countryData.population, 
+      image: countryData.image, 
+      like: 0,
+      id: (Number(countriesList.at(-1)?.id) + 1).toString(), 
+    };
+  
+   
     dispatch({
       type: "add",
-      payload: {
-        ...newCountry,
-        image: damyImage,
-        like: 0,
-        id: Number(countriesList.at(-1)?.id) + 1,
-      },
+      payload: newCountry,
     });
+  
+    
     setIsCountryVisible(false);
   };
+  
+  
 
 
   const handleDeleteCountry = (id: string) => {
@@ -74,7 +87,6 @@ const CountriesCards: React.FC = () => {
   };
 
   const translateCountryField = (field: { [key: string]: string }) => {
-    // Fallback to English if the selected language is unavailable
     return field[lang] || field['en'];
   };
 
@@ -82,7 +94,7 @@ const CountriesCards: React.FC = () => {
     <section className={classes.countries}>
       <Container>
         <div className={classes.heading}>
-        <H1 heading={lang === "ka" ? "ქვეყნები" : "Countries"} /> 
+          <H1 heading={lang === "ka" ? "ქვეყნები" : "Countries"} /> 
           <div className={classes["header-buttons"]}>
             <Button onClick={handleCountryVisibility} title="Add country" />
             <Button onClick={handleSortCards} title="Sort by likes" />
@@ -96,25 +108,23 @@ const CountriesCards: React.FC = () => {
               key={country.id}
             >
               <CardImage>
-                <img src={country.image} alt={country.title} />
+                <img src={country.image} alt={translateCountryField(country.title)} />
               </CardImage>
               <CardInfo>
-              <h2>{translateCountryField(country.title)}</h2>
+                <h2>{translateCountryField(country.title)}</h2>
                 <InfoBody>
                   <LikeBox
                     like={country.like}
                     onClick={() => handleLike(country.id)}
                   />
-
                   <CountryInfo>
-                  <div>{lang === "ka" ? "დედაქალაქი:" : "Capital:"}</div> {translateCountryField(country.capital)}
+                    <div>{lang === "ka" ? "დედაქალაქი:" : "Capital:"}</div> {translateCountryField(country.capital)}
                   </CountryInfo>
                   <CountryInfo>
-                  <div>{lang === "ka" ? "მოსახლეობა:" : "Population:"}</div>
-                  {country.population ? Number(country.population).toLocaleString() : "N/A"}
+                    <div>{lang === "ka" ? "მოსახლეობა:" : "Population:"}</div>
+                    {country.population ? Number(country.population).toLocaleString() : "N/A"}
                   </CountryInfo>
                 </InfoBody>
-
                 <Link
                   className={classes.seemore}
                   to={`countriedetail/${country.id}`}
@@ -122,16 +132,15 @@ const CountriesCards: React.FC = () => {
                   {lang === "ka" ? "მეტის ნახვა" : "See more"}
                 </Link>
                 <div className={classes.buttons}>
-                <Button
+                  <Button
                     onClick={() => handleDeleteCountry(country.id)}
                     title={lang === "ka" ? "წაშლა" : "Delete"}
                   />
-
                   {country.isMarkedForDelete && (
-                   <Button
-                   onClick={() => handleRestoreCountry(country.id)}
-                   title={lang === "ka" ? "აღდგენა" : "Restore"}
-                 />
+                    <Button
+                      onClick={() => handleRestoreCountry(country.id)}
+                      title={lang === "ka" ? "აღდგენა" : "Restore"}
+                    />
                   )}
                 </div>
               </CardInfo>

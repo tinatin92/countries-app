@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+
 import { NavLink, NavLinkRenderProps, useParams, useNavigate } from "react-router-dom";
 import { Container } from "../UI/container";
 import headerLogo from "@/assets/logo.svg";
@@ -20,19 +20,9 @@ export const Header: React.FC = () => {
   const { lang } = useParams();  
   const navigate = useNavigate();
 
+  const content = lang === 'en' || lang === 'ka' ? navData[lang] : navData.ka
 
-  const [content, setContent] = useState(navData.ka);
 
-  
-  useEffect(() => {
-    if (lang && navData[lang]) {
-      
-      setContent(navData[lang]);  
-    } else {
-      
-      setContent(navData.ka);
-    }
-  }, [lang]);
 
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

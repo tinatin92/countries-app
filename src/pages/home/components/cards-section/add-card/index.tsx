@@ -81,7 +81,7 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
-    // Validate file type
+    
     if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -117,14 +117,14 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
     };
     setErrors(newErrors);
 
-    // If any errors are present, do not submit
+    
     if (
       Object.values(newErrors).some((error) =>
         Object.values(error).some(Boolean)
       ) ||
       newErrors.population
     ) {
-      return; // Early return if there are validation errors
+      return; 
     }
 
     onSubmit(e, countryData);
@@ -133,8 +133,8 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
       capital: { en: "", ka: "" },
       description: { en: "", ka: "" },
       population: "",
-      image: "", // Reset the image field
-    }); // Reset the form after submission
+      image: "", 
+    }); 
   };
 
   if (!isPressed) return null;

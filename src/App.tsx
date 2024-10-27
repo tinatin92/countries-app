@@ -11,9 +11,6 @@ const CountrieDetailPage = lazy(
 const App: React.FC = () => {
   return (
     <Routes>
-
-
-      
       <Route
         path="/:lang"
         element={

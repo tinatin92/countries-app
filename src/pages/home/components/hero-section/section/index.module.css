@@ -1,127 +1,126 @@
 .hero-section__info {
-    position: relative;
-    z-index: 20;
+  position: relative;
+  z-index: 20;
+}
+.hero-section__info h1 {
+  position: relative;
+  font-size: 88px;
+  line-height: 120%;
+  margin-bottom: 16px;
+}
+.hero-section__info div {
+  width: 450px;
+  font-size: 20px;
+}
+
+.hero-section__info::before,
+.hero-section__info::after {
+  position: absolute;
+  content: "";
+}
+.hero-section__info::after {
+  width: 515px;
+  height: 515px;
+  border-radius: 50%;
+  background-color: #ff625e;
+  top: -140px;
+  left: -46px;
+  z-index: -1;
+  transform: scale(0);
+  transition: transform 0.3s;
+  animation: scaleIn 0.6s forwards;
+}
+@keyframes scaleIn {
+  to {
+    transform: scale(1);
   }
+}
+.hero-section__info h1::after {
+  position: absolute;
+  content: "";
+  height: 4px;
+  width: 0px;
+  background-color: #ff625e;
+  left: 480px;
+  bottom: 0;
+
+  animation: widthIn 0.6s forwards;
+}
+@keyframes widthIn {
+  to {
+    width: 280px;
+  }
+}
+
+@media (max-width: 1620px) {
+  .hero-section__info {
+    margin-left: 100px;
+  }
+
+  .share::before,
+  .share::after {
+    height: 180px;
+  }
+}
+@media (max-width: 1400px) {
   .hero-section__info h1 {
-    position: relative;
-    font-size: 88px;
-    line-height: 120%;
-    margin-bottom: 16px;
+    font-size: 68px;
+  }
+  .hero-section__info::after {
+    width: 415px;
+    height: 415px;
+    top: -96px;
   }
   .hero-section__info div {
-    width: 450px;
-    font-size: 20px;
-  }
-  
-  .hero-section__info::before,
-  .hero-section__info::after {
-    position: absolute;
-    content: "";
-  }
-  .hero-section__info::after {
-    width: 515px;
-    height: 515px;
-    border-radius: 50%;
-    background-color: #ff625e;
-    top: -140px;
-    left: -46px;
-    z-index: -1;
-    transform: scale(0);
-    transition: transform 0.3s;
-    animation: scaleIn 0.6s forwards;
-  }
-  @keyframes scaleIn {
-    to {
-      transform: scale(1);
-    }
+    width: 355px;
   }
   .hero-section__info h1::after {
-    position: absolute;
-    content: "";
-    height: 4px;
-    width: 0px;
-    background-color: #ff625e;
-    left: 480px;
-    bottom: 0;
-  
-    animation: widthIn 0.6s forwards;
+    left: 374px;
   }
   @keyframes widthIn {
     to {
-      width: 280px;
+      width: 180px;
     }
   }
-  
-  @media (max-width: 1620px) {
-    .hero-section__info {
-      margin-left: 100px;
-    }
-  
-    .share::before,
-    .share::after {
-      height: 180px;
-    }
+}
+@media (max-width: 1200px) {
+}
+@media (max-width: 992px) {
+  .hero-section__info h1 {
+    font-size: 54px;
   }
-  @media (max-width: 1400px) {
-    .hero-section__info h1 {
-      font-size: 68px;
-    }
-    .hero-section__info::after {
-      width: 415px;
-      height: 415px;
-      top: -96px;
-    }
-    .hero-section__info div {
-      width: 355px;
-    }
-    .hero-section__info h1::after {
-      left: 374px;
-    }
-    @keyframes widthIn {
-      to {
-        width: 180px;
-      }
-    }
+  .hero-section__info div {
+    width: 300px;
+    font-size: 18px;
   }
-  @media (max-width: 1200px) {
+  .hero-section__info::after {
+    width: 340px;
+    height: 340px;
+    top: -58px;
   }
-  @media (max-width: 992px) {
-    .hero-section__info h1 {
-      font-size: 54px;
-    }
-    .hero-section__info div {
-      width: 300px;
-      font-size: 18px;
-    }
-    .hero-section__info::after {
-      width: 340px;
-      height: 340px;
-      top: -58px;
-    }
-    .hero-section__info h1::after {
-      left: 298px;
-    }
+  .hero-section__info h1::after {
+    left: 298px;
   }
-  @media (max-width: 768px) {
-    .hero-section__info h1::after {
-      display: none;
-    }
+}
+@media (max-width: 768px) {
+  .hero-section__info h1::after {
+    display: none;
   }
-  @media (max-width: 576px) {
-    .hero-section__info::after {
-      width: 150px;
-      height: 150px;
-    }
-  
-    .hero-section__info h1 {
-      font-size: 36px;
-    }
-  
-    .hero-section__info div {
-      width: 250px;
-      font-size: 18px;
-    }
+}
+@media (max-width: 576px) {
+  .hero-section__info::after {
+    width: 150px;
+    height: 150px;
   }
-  @media (max-width: 440px) {
+
+  .hero-section__info h1 {
+    font-size: 36px;
   }
-  
+
+  .hero-section__info div {
+    width: 250px;
+    font-size: 18px;
+  }
+}
+@media (max-width: 440px) {
+}

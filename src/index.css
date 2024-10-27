@@ -1,10 +1,8 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
   font-family: "Urbanist", system-ui;
   line-height: 150%;
-
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -12,7 +10,7 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html{
+html {
   scroll-behavior: smooth;
 }
 
@@ -26,21 +24,26 @@ body {
   overflow-x: hidden;
 }
 
-*{
+* {
   font-family: "Urbanist", system-ui;
   box-sizing: border-box;
   line-height: 150%;
 }
 
-h1,h2,h3,h4,h5,h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   padding: 0;
 }
-a{
+a {
   color: inherit;
   text-decoration: none;
 }
-img{
+img {
   max-width: 100%;
   height: auto;
 }
@@ -51,7 +54,6 @@ img{
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
-  
 }
 
 /* Handle */

@@ -3,8 +3,6 @@ import { HeroInfo } from "@/components/hero-section";
 
 import classes from "./index.module.css";
 
-
-
 const HeroSection: React.FC<{ title: string; text: string; image: string }> = ({
   title,
   image,
@@ -12,7 +10,6 @@ const HeroSection: React.FC<{ title: string; text: string; image: string }> = ({
 }) => {
   return (
     <section className={classes["hero-section"]}>
-      
       <Container>
         <HeroInfo>
           <h1>{title}</h1>
@@ -20,7 +17,7 @@ const HeroSection: React.FC<{ title: string; text: string; image: string }> = ({
         </HeroInfo>
       </Container>
       <div className={classes["hero-image"]}>
-        <img src={image} alt='hero image' />
+        <img src={image} alt="hero image" />
       </div>
     </section>
   );

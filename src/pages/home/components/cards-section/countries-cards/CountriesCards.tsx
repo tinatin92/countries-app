@@ -17,29 +17,29 @@ import { countriesReduser } from "../reducer/reducer";
 import { COUNTRIES__DATA as initialCountries } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
 
-
-
 const CountriesCards: React.FC = () => {
-
-  const [countriesList, dispatch] = useReducer(countriesReduser, initialCountries);
+  const [countriesList, dispatch] = useReducer(
+    countriesReduser,
+    initialCountries,
+  );
   const [isCountryVisible, setIsCountryVisible] = useState(false);
 
   const { lang } = useParams<{ lang: string }>();
-
 
   const handleLike = (id: string) => {
     dispatch({ type: "upLike", payload: { id } });
   };
 
-  
   const handleSortCards = () => {
     dispatch({ type: "sort" });
   };
 
-
-  const handleAddCountry = (e: FormEvent<HTMLFormElement>, countryData: CountryData) => {
+  const handleAddCountry = (
+    e: FormEvent<HTMLFormElement>,
+    countryData: CountryData,
+  ) => {
     e.preventDefault();
-  
+
     const newCountry = {
       title: {
         en: countryData.title.en,
@@ -53,48 +53,41 @@ const CountriesCards: React.FC = () => {
         en: countryData.description.en,
         ka: countryData.description.ka,
       },
-      population: countryData.population, 
-      image: countryData.image, 
+      population: countryData.population,
+      image: countryData.image,
       like: 0,
-      id: (Number(countriesList.at(-1)?.id) + 1).toString(), 
+      id: (Number(countriesList.at(-1)?.id) + 1).toString(),
     };
-  
-   
+
     dispatch({
       type: "add",
       payload: newCountry,
     });
-  
-    
+
     setIsCountryVisible(false);
   };
-  
-  
-
 
   const handleDeleteCountry = (id: string) => {
     dispatch({ type: "delete", payload: { id } });
   };
 
-
   const handleRestoreCountry = (id: string) => {
     dispatch({ type: "restore", payload: { id } });
   };
 
-  
   const handleCountryVisibility = () => {
     setIsCountryVisible((prev) => !prev);
   };
 
   const translateCountryField = (field: { [key: string]: string }) => {
-    return field[lang] || field['en'];
+    return field[lang] || field["en"];
   };
 
   return (
     <section className={classes.countries}>
       <Container>
         <div className={classes.heading}>
-          <H1 heading={lang === "ka" ? "ქვეყნები" : "Countries"} /> 
+          <H1 heading={lang === "ka" ? "ქვეყნები" : "Countries"} />
           <div className={classes["header-buttons"]}>
             <Button onClick={handleCountryVisibility} title="Add country" />
             <Button onClick={handleSortCards} title="Sort by likes" />
@@ -108,7 +101,10 @@ const CountriesCards: React.FC = () => {
               key={country.id}
             >
               <CardImage>
-                <img src={country.image} alt={translateCountryField(country.title)} />
+                <img
+                  src={country.image}
+                  alt={translateCountryField(country.title)}
+                />
               </CardImage>
               <CardInfo>
                 <h2>{translateCountryField(country.title)}</h2>
@@ -118,11 +114,14 @@ const CountriesCards: React.FC = () => {
                     onClick={() => handleLike(country.id)}
                   />
                   <CountryInfo>
-                    <div>{lang === "ka" ? "დედაქალაქი:" : "Capital:"}</div> {translateCountryField(country.capital)}
+                    <div>{lang === "ka" ? "დედაქალაქი:" : "Capital:"}</div>{" "}
+                    {translateCountryField(country.capital)}
                   </CountryInfo>
                   <CountryInfo>
                     <div>{lang === "ka" ? "მოსახლეობა:" : "Population:"}</div>
-                    {country.population ? Number(country.population).toLocaleString() : "N/A"}
+                    {country.population
+                      ? Number(country.population).toLocaleString()
+                      : "N/A"}
                   </CountryInfo>
                 </InfoBody>
                 <Link

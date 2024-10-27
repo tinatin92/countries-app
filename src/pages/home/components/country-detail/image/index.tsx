@@ -1,10 +1,8 @@
+import { PropsWithChildren } from "react";
+import classes from "./index.module.css";
 
-import { PropsWithChildren } from 'react'
-import classes from './index.module.css'
+const image: React.FC<PropsWithChildren> = ({ children }) => {
+  return <div className={classes.image}>{children}</div>;
+};
 
-const image: React.FC<PropsWithChildren> = ({children}) => {
-
-    return <div className={classes.image}>{children}</div>
-}
-
-export default image
+export default image;

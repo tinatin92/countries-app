@@ -5,15 +5,14 @@
   gap: 20px;
   justify-content: flex-end;
   margin-top: 40px;
-  
 }
-.addform{
-    height: 0px;
-    visibility: hidden;
+.addform {
+  height: 0px;
+  visibility: hidden;
 }
-.addform.active{
-    height: auto;
-    visibility: visible;
+.addform.active {
+  height: auto;
+  visibility: visible;
 }
 .form div label {
   font-size: 14px;
@@ -24,7 +23,6 @@
   flex-direction: column;
   gap: 8px;
   width: 70%;
- 
 }
 .form input {
   padding: 12px;
@@ -40,37 +38,35 @@
   border: 1px solid #000;
   padding: 12px;
 }
-.form button{
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #fff;
-    background-color: #000;
-    border: 1px solid #000;
-    border-radius: 50px;
-    width: 30%;
-    align-self: center;
-    cursor: pointer;
-    transition: all .3s;
+.form button {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background-color: #000;
+  border: 1px solid #000;
+  border-radius: 50px;
+  width: 30%;
+  align-self: center;
+  cursor: pointer;
+  transition: all 0.3s;
 }
-.form button:hover{
-    background-color: #fff;
-    color: #000;
+.form button:hover {
+  background-color: #fff;
+  color: #000;
 }
 /* input[type='file'] {
   visibility: hidden;
 } */
-.image{
- 
+.image {
   display: inline-block;
- 
 
- transition: all .3s;
+  transition: all 0.3s;
 
   color: #000;
   cursor: pointer;
 }
-.image label{
+.image label {
   cursor: pointer;
 }
 
@@ -78,19 +74,19 @@
 .form.error textarea {
   border: 2px solid red;
 }
-.error-text{
+.error-text {
   color: red;
   font-size: 14px;
   font-weight: 600;
   margin: 0;
 }
-.buttons{
+.buttons {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 25px;
 }
-.toggle{
+.toggle {
   text-align: center;
   padding: 8px 16px;
   min-width: 150px;
@@ -100,14 +96,14 @@
   font-size: 16px;
   font-weight: 600;
   border-radius: 50px;
-  transition: all .3s;
+  transition: all 0.3s;
   cursor: pointer;
 }
-.toggle:hover{
+.toggle:hover {
   background-color: #000;
   color: #fff;
 }
-.toggle.active{
+.toggle.active {
   background-color: #000;
   color: #fff;
 }

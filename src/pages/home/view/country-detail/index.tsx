@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { COUNTRIES__DATA } from "../../static/dummy-data.ts";
 
 const CountrieDetailPage: React.FC = () => {
-  const { id, lang } = useParams<{ id: string, lang: string }>();
+  const { id, lang } = useParams<{ id: string; lang: string }>();
 
   // Find the country by ID
   const countryInfo = COUNTRIES__DATA.find((country) => country.id === id);

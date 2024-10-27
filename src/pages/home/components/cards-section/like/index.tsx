@@ -1,7 +1,10 @@
 import classes from "./index.module.css";
 import likeImage from "@/assets/svgexport-15 (3).svg";
 
-const LikeBox: React.FC<{ like: number, onClick : () => void }> = ({ like, onClick }) => {
+const LikeBox: React.FC<{ like: number; onClick: () => void }> = ({
+  like,
+  onClick,
+}) => {
   return (
     <div className={classes["like-box"]}>
       <div className={classes.num}>

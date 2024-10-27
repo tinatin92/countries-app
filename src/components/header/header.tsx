@@ -1,5 +1,9 @@
-
-import { NavLink, NavLinkRenderProps, useParams, useNavigate } from "react-router-dom";
+import {
+  NavLink,
+  NavLinkRenderProps,
+  useParams,
+  useNavigate,
+} from "react-router-dom";
 import { Container } from "../UI/container";
 import headerLogo from "@/assets/logo.svg";
 import searchIcon from "@/assets/Search.svg";
@@ -17,17 +21,14 @@ const navData = {
 };
 
 export const Header: React.FC = () => {
-  const { lang } = useParams();  
+  const { lang } = useParams();
   const navigate = useNavigate();
 
-  const content = lang === 'en' || lang === 'ka' ? navData[lang] : navData.ka
-
-
-
+  const content = lang === "en" || lang === "ka" ? navData[lang] : navData.ka;
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLang = e.target.value;
-    navigate(`/${selectedLang}`); 
+    navigate(`/${selectedLang}`);
   };
 
   const handleActiveNav = (props: NavLinkRenderProps) => {
@@ -52,7 +53,12 @@ export const Header: React.FC = () => {
               <NavLink to="contact" className={handleActiveNav}>
                 {content.contact}
               </NavLink>
-              <select value={lang} name="lang" id="lang" onChange={handleLanguageChange}>
+              <select
+                value={lang}
+                name="lang"
+                id="lang"
+                onChange={handleLanguageChange}
+              >
                 <option value="en">ENG</option>
                 <option value="ka">GEO</option>
               </select>

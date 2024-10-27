@@ -5,7 +5,7 @@ interface AddCountryProps {
   isPressed: boolean;
   onSubmit: (
     e: React.FormEvent<HTMLFormElement>,
-    countryData: CountryData
+    countryData: CountryData,
   ) => void;
 }
 
@@ -53,7 +53,7 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     const [field, lang] = name.split(".");
@@ -81,7 +81,6 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
-    
     if (file && (file.type === "image/png" || file.type === "image/jpeg")) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -92,7 +91,7 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
       };
       reader.readAsDataURL(file);
     } else {
-      e.target.value = ""; 
+      e.target.value = "";
       alert("Please select a valid image file (PNG or JPG only).");
     }
   };
@@ -117,14 +116,13 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
     };
     setErrors(newErrors);
 
-    
     if (
       Object.values(newErrors).some((error) =>
-        Object.values(error).some(Boolean)
+        Object.values(error).some(Boolean),
       ) ||
       newErrors.population
     ) {
-      return; 
+      return;
     }
 
     onSubmit(e, countryData);
@@ -133,8 +131,8 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
       capital: { en: "", ka: "" },
       description: { en: "", ka: "" },
       population: "",
-      image: "", 
-    }); 
+      image: "",
+    });
   };
 
   if (!isPressed) return null;

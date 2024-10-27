@@ -4,7 +4,7 @@
   border-radius: 16px;
 }
 
-.country-box:hover  img{
+.country-box:hover img {
   filter: grayscale(0%);
 }
 
@@ -25,7 +25,6 @@
   }
 }
 @media (max-width: 576px) {
-  
 }
 @media (max-width: 440px) {
 }

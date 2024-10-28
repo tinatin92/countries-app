@@ -26,6 +26,7 @@ interface CountryData {
   image: string;
 }
 
+
 const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
   const [countryData, setCountryData] = useState<CountryData>({
     title: { en: "", ka: "" },
@@ -53,30 +54,53 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    const [field, lang] = name.split(".");
-    console.log(field, name, lang);
-
-    setCountryData((prev) => ({
-      ...prev,
-      [field]: {
-        ...prev[field],
-        [lang]: value,
-      },
-    }));
-
-    if (value.trim().length > 0) {
-      setErrors((prev) => ({
+    const [field, lang] = name.split(".") as [keyof CountryData, "en" | "ka"];
+  
+    setCountryData((prev) => {
+      // Check if the field is one of the nested objects (title, capital, description)
+      if (field === "title" || field === "capital" || field === "description") {
+        return {
+          ...prev,
+          [field]: {
+            ...prev[field],
+            [lang]: value,
+          },
+        };
+      }
+  
+      // Handle non-nested fields like population and image
+      return {
         ...prev,
-        [field]: {
-          ...prev[field],
-          [lang]: false,
-        },
-      }));
+        [field]: value,
+      };
+    });
+  
+    // Update errors if value is not empty
+    if (value.trim().length > 0) {
+      setErrors((prev) => {
+        // Only update fields that exist in errors
+        if (field === "title" || field === "capital" || field === "description") {
+          return {
+            ...prev,
+            [field]: {
+              ...prev[field as "title" | "capital" | "description"],
+              [lang]: false,
+            },
+          };
+        } else if (field === "population") {
+          return {
+            ...prev,
+            population: false,
+          };
+        }
+        return prev;
+      });
     }
   };
+  
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

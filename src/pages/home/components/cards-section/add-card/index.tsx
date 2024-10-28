@@ -26,7 +26,6 @@ interface CountryData {
   image: string;
 }
 
-
 const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
   const [countryData, setCountryData] = useState<CountryData>({
     title: { en: "", ka: "" },
@@ -54,11 +53,11 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     const [field, lang] = name.split(".") as [keyof CountryData, "en" | "ka"];
-  
+
     setCountryData((prev) => {
       // Check if the field is one of the nested objects (title, capital, description)
       if (field === "title" || field === "capital" || field === "description") {
@@ -70,19 +69,23 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
           },
         };
       }
-  
+
       // Handle non-nested fields like population and image
       return {
         ...prev,
         [field]: value,
       };
     });
-  
+
     // Update errors if value is not empty
     if (value.trim().length > 0) {
       setErrors((prev) => {
         // Only update fields that exist in errors
-        if (field === "title" || field === "capital" || field === "description") {
+        if (
+          field === "title" ||
+          field === "capital" ||
+          field === "description"
+        ) {
           return {
             ...prev,
             [field]: {
@@ -100,7 +103,6 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
       });
     }
   };
-  
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

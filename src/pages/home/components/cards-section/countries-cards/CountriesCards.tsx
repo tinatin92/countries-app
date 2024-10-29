@@ -17,6 +17,9 @@ import { countriesReduser } from "../reducer/reducer";
 import { COUNTRIES__DATA as initialCountries } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
 
+
+
+
 const CountriesCards: React.FC = () => {
   const [countriesList, dispatch] = useReducer(
     countriesReduser,

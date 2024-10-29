@@ -1,14 +1,13 @@
 type Country = {
-  title: string;
-  capital: string;
+  title: { [key: string]: string };
+  capital: { [key: string]: string };
   population: string;
   image: string;
-  description: string;
+  description: { [key: string]: string };
   id: string;
   like: number;
   isMarkedForDelete: boolean;
-  originalIndex?: number;
-};
+}
 
 type countriesType = Country[];
 

@@ -1,4 +1,4 @@
-type Country = {
+export type Country = {
   title: { [key: string]: string };
   capital: { [key: string]: string };
   population: string;
@@ -7,9 +7,10 @@ type Country = {
   id: string;
   like: number;
   isMarkedForDelete: boolean;
+  originalIndex?: number;
 }
 
-type countriesType = Country[];
+export type countriesType = Country[];
 
 type actionsType =
   | { type: "upLike"; payload: { id: string } }
@@ -85,6 +86,8 @@ export const countriesReduser = (
         restoredCountry,
       );
 
+
+
       return remainingCountries;
     }
 
@@ -92,8 +95,10 @@ export const countriesReduser = (
   }
 
   if (action.type === "add") {
-    const newCountry = action.payload;
-
+    const newCountry: Country = {
+      ...action.payload,
+      isMarkedForDelete: false,  
+    };
     return [...countries, newCountry];
   }
 

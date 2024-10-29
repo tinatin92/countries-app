@@ -13,9 +13,10 @@ import { Row } from "@/components/UI/row";
 import LikeBox from "../like";
 import Button from "../sort-button";
 import { countriesReduser } from "../reducer/reducer";
-
+import { CountryData } from "../add-card/index"
 import { COUNTRIES__DATA as initialCountries } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
+
 
 
 
@@ -43,7 +44,7 @@ const CountriesCards: React.FC = () => {
   ) => {
     e.preventDefault();
 
-    const newCountry = {
+    const newCountry: CountryData = {
       title: {
         en: countryData.title.en,
         ka: countryData.title.ka,
@@ -59,7 +60,8 @@ const CountriesCards: React.FC = () => {
       population: countryData.population,
       image: countryData.image,
       like: 0,
-      id: (Number(countriesList.at(-1)?.id) + 1).toString(),
+      id: (Number(countriesList.at(-1)?.id) + 1).toString(), // Ensure this logic is correct
+      isMarkedForDelete: false, // Initialize as false (not marked for deletion)
     };
 
     dispatch({
@@ -83,7 +85,7 @@ const CountriesCards: React.FC = () => {
   };
 
   const translateCountryField = (field: { [key: string]: string }) => {
-    return field[lang] || field["en"];
+    return lang ? field[lang] || field["en"] : field["en"];
   };
 
   return (

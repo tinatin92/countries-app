@@ -5,11 +5,11 @@ interface AddCountryProps {
   isPressed: boolean;
   onSubmit: (
     e: React.FormEvent<HTMLFormElement>,
-    countryData: CountryData,
+    countryData: CountryData
   ) => void;
 }
 
-interface CountryData {
+export type CountryData = {
   title: {
     en: string;
     ka: string;
@@ -18,13 +18,16 @@ interface CountryData {
     en: string;
     ka: string;
   };
+  population: string;
+  image: string;
   description: {
     en: string;
     ka: string;
   };
-  population: string;
-  image: string;
-}
+  like: number;
+  id: string;
+  isMarkedForDelete: boolean;
+};
 
 const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
   const [countryData, setCountryData] = useState<CountryData>({
@@ -33,18 +36,12 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
     description: { en: "", ka: "" },
     population: "",
     image: "",
+    like: 0,
+    id: "", // Consider generating a unique ID
+    isMarkedForDelete: false,
   });
 
-  const [togglelang, setToggleLang] = useState("ka");
-
-  const handleLangKa = (index: string) => {
-    setToggleLang("ka");
-    console.log(index);
-  };
-  const handleLangEn = (index: string) => {
-    setToggleLang("en");
-    console.log(index);
-  };
+  const [toggleLang, setToggleLang] = useState<"en" | "ka">("ka");
   const [errors, setErrors] = useState({
     title: { en: false, ka: false },
     capital: { en: false, ka: false },
@@ -53,13 +50,12 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     const [field, lang] = name.split(".") as [keyof CountryData, "en" | "ka"];
 
     setCountryData((prev) => {
-      // Check if the field is one of the nested objects (title, capital, description)
       if (field === "title" || field === "capital" || field === "description") {
         return {
           ...prev,
@@ -69,23 +65,15 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
           },
         };
       }
-
-      // Handle non-nested fields like population and image
       return {
         ...prev,
         [field]: value,
       };
     });
 
-    // Update errors if value is not empty
     if (value.trim().length > 0) {
       setErrors((prev) => {
-        // Only update fields that exist in errors
-        if (
-          field === "title" ||
-          field === "capital" ||
-          field === "description"
-        ) {
+        if (field === "title" || field === "capital" || field === "description") {
           return {
             ...prev,
             [field]: {
@@ -144,7 +132,7 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
 
     if (
       Object.values(newErrors).some((error) =>
-        Object.values(error).some(Boolean),
+        Object.values(error).some(Boolean)
       ) ||
       newErrors.population
     ) {
@@ -152,155 +140,102 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
     }
 
     onSubmit(e, countryData);
+    // Reset country data after submission
     setCountryData({
       title: { en: "", ka: "" },
       capital: { en: "", ka: "" },
       description: { en: "", ka: "" },
       population: "",
       image: "",
+      like: 0,
+      id: "", // Reset ID
+      isMarkedForDelete: false,
     });
   };
 
-  if (!isPressed) return null;
+  if (!isPressed) {
+    return null; // Return null if not pressed
+  }
 
   return (
     <div className={`${classes.addform} ${isPressed ? classes.active : ""}`}>
       <div className={classes.buttons}>
         <div
-          className={`${classes.toggle} ${
-            togglelang === "ka" ? classes.active : ""
-          }`}
-          onClick={() => handleLangKa("ka")}
+          className={`${classes.toggle} ${toggleLang === "ka" ? classes.active : ""}`}
+          onClick={() => setToggleLang("ka")}
         >
           Georgian
         </div>
         <div
-          className={`${classes.toggle} ${
-            togglelang === "en" ? classes.active : ""
-          }`}
-          onClick={() => handleLangEn("en")}
+          className={`${classes.toggle} ${toggleLang === "en" ? classes.active : ""}`}
+          onClick={() => setToggleLang("en")}
         >
           English
         </div>
       </div>
       <form onSubmit={handleSubmit} className={classes.form}>
-        {togglelang === "en" && (
-          <div>
-            <label>Tile:</label>
-            <input
-              type="text"
-              name="title.en"
-              value={countryData.title.en}
-              onChange={handleChange}
-            />
-            {errors.title.en && (
-              <p className={classes["error-text"]}>
-                Please enter Country Title
-              </p>
-            )}
-          </div>
-        )}
-        {togglelang === "ka" && (
-          <div>
-            <label>დასახელება:</label>
-            <input
-              type="text"
-              name="title.ka"
-              value={countryData.title.ka}
-              onChange={handleChange}
-            />
-            {errors.title.ka && (
-              <p className={classes["error-text"]}>
-                გთხოვთ შეიყვანეთ ქვეყნის სახელი
-              </p>
-            )}
-          </div>
-        )}
-        {togglelang === "en" && (
-          <div>
-            <label>Capital:</label>
-            <input
-              type="text"
-              name="capital.en"
-              value={countryData.capital.en}
-              onChange={handleChange}
-            />
-            {errors.capital.en && (
-              <p className={classes["error-text"]}>
-                Please enter Country capital
-              </p>
-            )}
-          </div>
-        )}
-        {togglelang === "ka" && (
-          <div>
-            <label>დედაქალაქი:</label>
-            <input
-              type="text"
-              name="capital.ka"
-              value={countryData.capital.ka}
-              onChange={handleChange}
-            />
-            {errors.capital.ka && (
-              <p className={classes["error-text"]}>
-                გთხოვთ შეიყვანეთ ქვეყნის დედაქალაქი
-              </p>
-            )}
-          </div>
-        )}
-        {togglelang === "en" && (
-          <div>
-            <label>Description:</label>
-            <textarea
-              name="description.en"
-              value={countryData.description.en}
-              onChange={handleChange}
-            />
-            {errors.description.en && (
-              <p className={classes["error-text"]}>
-                Please enter Country description
-              </p>
-            )}
-          </div>
-        )}
-        {togglelang === "ka" && (
-          <div>
-            <label>აღწერა:</label>
-            <textarea
-              name="description.ka"
-              value={countryData.description.ka}
-              onChange={handleChange}
-            />
-            {errors.description.ka && (
-              <p className={classes["error-text"]}>
-                გთხოვთ შეიყვანეთ ქვეყნის აღწერა
-              </p>
-            )}
-          </div>
-        )}
+        {/* Title Input */}
         <div>
-          <label>{togglelang === "en" ? "Population:" : "მოსახლეობა:"}</label>
+          <label>{toggleLang === "en" ? "Title:" : "დასახელება:"}</label>
+          <input
+            type="text"
+            name={`title.${toggleLang}`}
+            value={toggleLang === "en" ? countryData.title.en : countryData.title.ka}
+            onChange={handleChange}
+          />
+          {errors.title[toggleLang] && (
+            <p className={classes["error-text"]}>
+              {toggleLang === "en" ? "Please enter Country Title" : "გთხოვთ შეიყვანეთ ქვეყნის სახელი"}
+            </p>
+          )}
+        </div>
+        {/* Capital Input */}
+        <div>
+          <label>{toggleLang === "en" ? "Capital:" : "დედაქალაქი:"}</label>
+          <input
+            type="text"
+            name={`capital.${toggleLang}`}
+            value={toggleLang === "en" ? countryData.capital.en : countryData.capital.ka}
+            onChange={handleChange}
+          />
+          {errors.capital[toggleLang] && (
+            <p className={classes["error-text"]}>
+              {toggleLang === "en" ? "Please enter Country Capital" : "გთხოვთ შეიყვანეთ ქვეყნის დედაქალაქი"}
+            </p>
+          )}
+        </div>
+        {/* Description Input */}
+        <div>
+          <label>{toggleLang === "en" ? "Description:" : "აღწერა:"}</label>
+          <textarea
+            name={`description.${toggleLang}`}
+            value={toggleLang === "en" ? countryData.description.en : countryData.description.ka}
+            onChange={handleChange}
+          />
+          {errors.description[toggleLang] && (
+            <p className={classes["error-text"]}>
+              {toggleLang === "en" ? "Please enter Country Description" : "გთხოვთ შეიყვანეთ ქვეყნის აღწერა"}
+            </p>
+          )}
+        </div>
+        {/* Population Input */}
+        <div>
+          <label>{toggleLang === "en" ? "Population:" : "მოსახლეობა:"}</label>
           <input
             type="number"
             name="population"
             value={countryData.population}
-            onChange={(e) =>
-              setCountryData({ ...countryData, population: e.target.value })
-            }
+            onChange={(e) => setCountryData({ ...countryData, population: e.target.value })}
           />
-          {errors.population &&
-            (togglelang === "en" ? (
-              <p className={classes["error-text"]}>
-                Please enter Country Population
-              </p>
-            ) : (
-              <p className={classes["error-text"]}>
-                გთხოვთ შეიყვანეთ ქვეყნის მოსახლეობა
-              </p>
-            ))}
+          {errors.population && (
+            <p className={classes["error-text"]}>
+              {toggleLang === "en" ? "Please enter Country Population" : "გთხოვთ შეიყვანეთ ქვეყნის მოსახლეობა"}
+            </p>
+          )}
         </div>
+        {/* Image Input */}
         <div className={classes.image}>
-          <label>{togglelang === "en" ? "Image:" : "სურათი"}</label>
+          <label>{toggleLang === "en" ? "Image:" : "სურათი"}</label>
           <input
             type="file"
             id="image"
@@ -315,8 +250,7 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
             alt="Preview"
             style={{ width: "100px", height: "auto" }}
           />
-        )}{" "}
-        {/* Image preview */}
+        )}
         <button type="submit">Add Country</button>
       </form>
     </div>

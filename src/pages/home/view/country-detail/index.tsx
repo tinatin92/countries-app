@@ -22,7 +22,7 @@ const CountrieDetailPage: React.FC = () => {
       description={countryInfo.description[language]} // Use translated description
       population={countryInfo.population}
       image={countryInfo.image}
-      like={countryInfo.like}
+      like={countryInfo.like} 
     />
   );
 };

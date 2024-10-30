@@ -50,7 +50,7 @@ const App: React.FC = () => {
           path="otp"
           element={
             <Suspense fallback={<p>Loading Otp page...</p>}>
-              <OtpPage length={6}/>
+              <OtpPage length={4}/>
             </Suspense>
           }
         />

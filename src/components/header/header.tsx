@@ -26,6 +26,13 @@ export const Header: React.FC = () => {
   const { lang } = useParams();
   const navigate = useNavigate();
 
+
+
+
+
+
+  
+
   const content = lang === "en" || lang === "ka" ? navData[lang] : navData.ka;
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

@@ -4,6 +4,7 @@ const DefaultLayout = lazy(() => import("./layouts/default"));
 const AboutView = lazy(() => import("./pages/about/views/about"));
 const HomeView = lazy(() => import("./pages/home/view/home"));
 const ContactPage = lazy(() => import("./pages/contact/views/contact"));
+const OtpPage = lazy(() => import("./pages/otp/index"))
 const CountrieDetailPage = lazy(
   () => import("./pages/home/view/country-detail"),
 );
@@ -36,11 +37,20 @@ const App: React.FC = () => {
             </Suspense>
           }
         />
+        
         <Route
           path="about"
           element={
             <Suspense fallback={<p>Loading about page...</p>}>
               <AboutView />
+            </Suspense>
+          }
+        />
+         <Route
+          path="otp"
+          element={
+            <Suspense fallback={<p>Loading Otp page...</p>}>
+              <OtpPage length={6}/>
             </Suspense>
           }
         />

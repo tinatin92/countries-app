@@ -13,10 +13,12 @@ const navData = {
   en: {
     about: "About AllGlobe",
     contact: "Contact",
+    otp: 'OTP'
   },
   ka: {
     about: "ჩვენს შესახებ",
     contact: "კონტაქტი",
+    otp: 'OTP'
   },
 };
 
@@ -47,6 +49,9 @@ export const Header: React.FC = () => {
           </div>
           <div className={classes.navigation}>
             <nav>
+              <NavLink to="otp" className={handleActiveNav}>
+                {content.otp}
+              </NavLink>
               <NavLink to="about" className={handleActiveNav}>
                 {content.about}
               </NavLink>

@@ -31,7 +31,7 @@ type Country = {
   id: string;
   like: number;
   isMarkedForDelete: boolean;
-}
+};
 
 export const COUNTRIES__DATA: Country[] = [
   {

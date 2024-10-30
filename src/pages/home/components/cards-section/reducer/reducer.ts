@@ -8,7 +8,7 @@ export type Country = {
   like: number;
   isMarkedForDelete: boolean;
   originalIndex?: number;
-}
+};
 
 export type countriesType = Country[];
 
@@ -86,8 +86,6 @@ export const countriesReduser = (
         restoredCountry,
       );
 
-
-
       return remainingCountries;
     }
 
@@ -97,7 +95,7 @@ export const countriesReduser = (
   if (action.type === "add") {
     const newCountry: Country = {
       ...action.payload,
-      isMarkedForDelete: false,  
+      isMarkedForDelete: false,
     };
     return [...countries, newCountry];
   }

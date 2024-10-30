@@ -13,13 +13,9 @@ import { Row } from "@/components/UI/row";
 import LikeBox from "../like";
 import Button from "../sort-button";
 import { countriesReduser } from "../reducer/reducer";
-import { CountryData } from "../add-card/index"
+import { CountryData } from "../add-card/index";
 import { COUNTRIES__DATA as initialCountries } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
-
-
-
-
 
 const CountriesCards: React.FC = () => {
   const [countriesList, dispatch] = useReducer(

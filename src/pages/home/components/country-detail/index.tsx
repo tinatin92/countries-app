@@ -9,7 +9,7 @@ interface CountryDetailProps {
   population: string;
   image: string;
   description: string;
-  like: number
+  like: number;
 }
 
 const CountrieDetail: React.FC<CountryDetailProps> = ({

@@ -5,7 +5,7 @@ interface AddCountryProps {
   isPressed: boolean;
   onSubmit: (
     e: React.FormEvent<HTMLFormElement>,
-    countryData: CountryData
+    countryData: CountryData,
   ) => void;
 }
 
@@ -50,7 +50,7 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     const [field, lang] = name.split(".") as [keyof CountryData, "en" | "ka"];
@@ -73,7 +73,11 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
 
     if (value.trim().length > 0) {
       setErrors((prev) => {
-        if (field === "title" || field === "capital" || field === "description") {
+        if (
+          field === "title" ||
+          field === "capital" ||
+          field === "description"
+        ) {
           return {
             ...prev,
             [field]: {
@@ -132,7 +136,7 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
 
     if (
       Object.values(newErrors).some((error) =>
-        Object.values(error).some(Boolean)
+        Object.values(error).some(Boolean),
       ) ||
       newErrors.population
     ) {
@@ -180,12 +184,16 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
           <input
             type="text"
             name={`title.${toggleLang}`}
-            value={toggleLang === "en" ? countryData.title.en : countryData.title.ka}
+            value={
+              toggleLang === "en" ? countryData.title.en : countryData.title.ka
+            }
             onChange={handleChange}
           />
           {errors.title[toggleLang] && (
             <p className={classes["error-text"]}>
-              {toggleLang === "en" ? "Please enter Country Title" : "გთხოვთ შეიყვანეთ ქვეყნის სახელი"}
+              {toggleLang === "en"
+                ? "Please enter Country Title"
+                : "გთხოვთ შეიყვანეთ ქვეყნის სახელი"}
             </p>
           )}
         </div>
@@ -195,12 +203,18 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
           <input
             type="text"
             name={`capital.${toggleLang}`}
-            value={toggleLang === "en" ? countryData.capital.en : countryData.capital.ka}
+            value={
+              toggleLang === "en"
+                ? countryData.capital.en
+                : countryData.capital.ka
+            }
             onChange={handleChange}
           />
           {errors.capital[toggleLang] && (
             <p className={classes["error-text"]}>
-              {toggleLang === "en" ? "Please enter Country Capital" : "გთხოვთ შეიყვანეთ ქვეყნის დედაქალაქი"}
+              {toggleLang === "en"
+                ? "Please enter Country Capital"
+                : "გთხოვთ შეიყვანეთ ქვეყნის დედაქალაქი"}
             </p>
           )}
         </div>
@@ -209,12 +223,18 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
           <label>{toggleLang === "en" ? "Description:" : "აღწერა:"}</label>
           <textarea
             name={`description.${toggleLang}`}
-            value={toggleLang === "en" ? countryData.description.en : countryData.description.ka}
+            value={
+              toggleLang === "en"
+                ? countryData.description.en
+                : countryData.description.ka
+            }
             onChange={handleChange}
           />
           {errors.description[toggleLang] && (
             <p className={classes["error-text"]}>
-              {toggleLang === "en" ? "Please enter Country Description" : "გთხოვთ შეიყვანეთ ქვეყნის აღწერა"}
+              {toggleLang === "en"
+                ? "Please enter Country Description"
+                : "გთხოვთ შეიყვანეთ ქვეყნის აღწერა"}
             </p>
           )}
         </div>
@@ -225,11 +245,15 @@ const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
             type="number"
             name="population"
             value={countryData.population}
-            onChange={(e) => setCountryData({ ...countryData, population: e.target.value })}
+            onChange={(e) =>
+              setCountryData({ ...countryData, population: e.target.value })
+            }
           />
           {errors.population && (
             <p className={classes["error-text"]}>
-              {toggleLang === "en" ? "Please enter Country Population" : "გთხოვთ შეიყვანეთ ქვეყნის მოსახლეობა"}
+              {toggleLang === "en"
+                ? "Please enter Country Population"
+                : "გთხოვთ შეიყვანეთ ქვეყნის მოსახლეობა"}
             </p>
           )}
         </div>

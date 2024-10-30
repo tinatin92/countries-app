@@ -17,12 +17,12 @@ const CountrieDetailPage: React.FC = () => {
 
   return (
     <CountrieDetail
-      title={countryInfo.title[language]} // Use translated title
-      capital={countryInfo.capital[language]} // Use translated capital
-      description={countryInfo.description[language]} // Use translated description
+      title={countryInfo.title[language]} 
+      capital={countryInfo.capital[language]} 
+      description={countryInfo.description[language]} 
       population={countryInfo.population}
       image={countryInfo.image}
-      like={countryInfo.like} 
+      like={countryInfo.like}
     />
   );
 };

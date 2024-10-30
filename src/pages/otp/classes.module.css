@@ -1,16 +1,15 @@
 .inputBox {
-   display: flex;
-   align-items: center;
-   gap: 20px;
-    justify-content: center;
-   width: 100%;
-   height: 100vh;
-
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
 }
 .inputBox input {
-    width: 100px;
-    height: 100px;
-    font-size: 24px;
-    
-    text-align: center;
+  width: 100px;
+  height: 100px;
+  font-size: 24px;
+
+  text-align: center;
 }

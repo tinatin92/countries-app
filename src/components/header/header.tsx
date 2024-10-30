@@ -13,25 +13,18 @@ const navData = {
   en: {
     about: "About AllGlobe",
     contact: "Contact",
-    otp: 'OTP'
+    otp: "OTP",
   },
   ka: {
     about: "ჩვენს შესახებ",
     contact: "კონტაქტი",
-    otp: 'OTP'
+    otp: "OTP",
   },
 };
 
 export const Header: React.FC = () => {
   const { lang } = useParams();
   const navigate = useNavigate();
-
-
-
-
-
-
-  
 
   const content = lang === "en" || lang === "ka" ? navData[lang] : navData.ka;
 

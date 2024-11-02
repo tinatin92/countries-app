@@ -1,7 +1,7 @@
-import countrieJapan from "@/assets/japan 2.png";
+// import countrieJapan from "@/assets/japan 2.png";
 import heroImage from "@/assets/japan.png";
-import countrieEngland from "@/assets/london 2.webp";
-import countrieFrance from "@/assets/paris 2.jpeg";
+// import countrieEngland from "@/assets/london 2.webp";
+// import countrieFrance from "@/assets/paris 2.jpeg";
 
 export const HERO_SECTION__DATA: {
   [key: string]: {
@@ -22,7 +22,7 @@ export const HERO_SECTION__DATA: {
   },
 };
 
-type Country = {
+/* type Country = {
   title: { [key: string]: string };
   capital: { [key: string]: string };
   population: string;
@@ -31,9 +31,9 @@ type Country = {
   id: string;
   like: number;
   isMarkedForDelete: boolean;
-};
+}; */
 
-export const COUNTRIES__DATA: Country[] = [
+/*  export const COUNTRIES__DATA: Country[] = [
   {
     image: countrieJapan,
     title: {
@@ -91,4 +91,4 @@ export const COUNTRIES__DATA: Country[] = [
     like: 0,
     isMarkedForDelete: false,
   },
-];
+];  */

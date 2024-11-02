@@ -18,7 +18,7 @@ const Otp: React.FC<OtpProps> = ({ length }) => {
   const inputRefs = useRef<HTMLInputElement[]>([]);
 
   useEffect(() => {
-    inputRefs.current[0]?.focus(); 
+    inputRefs.current[0]?.focus();
   }, []);
 
   const handleInputChange = (

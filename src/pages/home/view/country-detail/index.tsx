@@ -1,28 +1,40 @@
+import { useEffect, useState } from "react";
 import CountrieDetail from "../../components/country-detail";
 import { useParams } from "react-router-dom";
-import { COUNTRIES__DATA } from "../../static/dummy-data.ts";
+import axios from "axios";
+import {CountryData} from '../../components/cards-section/add-card/index'
+
 
 const CountrieDetailPage: React.FC = () => {
+  const [countryDetail, setCountryDetail] = useState<CountryData | null>(null);
   const { id, lang } = useParams<{ id: string; lang: string }>();
 
-  // Find the country by ID
-  const countryInfo = COUNTRIES__DATA.find((country) => country.id === id);
+  useEffect(() => {
+   
+    axios.get(`http://localhost:3000/countries/${id}`)
+      .then((response) => {
+        setCountryDetail(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching country data:", error);
+      });
+  }, [id]); 
 
-  if (!countryInfo) {
-    return <p>Country not found!</p>;
+
+  if (!countryDetail) {
+    return <p>Loading country details...</p>; 
   }
 
-  // Set default language to English if none is provided
   const language = lang === "en" || lang === "ka" ? lang : "en";
 
   return (
     <CountrieDetail
-      title={countryInfo.title[language]} 
-      capital={countryInfo.capital[language]} 
-      description={countryInfo.description[language]} 
-      population={countryInfo.population}
-      image={countryInfo.image}
-      like={countryInfo.like}
+      title={countryDetail.title[language]}
+      capital={countryDetail.capital[language]}
+      description={countryDetail.description[language]}
+      population={countryDetail.population}
+      image={countryDetail.image}
+      like={countryDetail.like}
     />
   );
 };

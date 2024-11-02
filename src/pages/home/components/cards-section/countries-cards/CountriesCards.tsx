@@ -1,5 +1,6 @@
-import { FormEvent, useReducer, useState } from "react";
+import { FormEvent, useReducer, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 import AddCountry from "../add-card";
 import classes from "./CountriesCards.module.css";
 import { Container } from "@/components/UI/container";
@@ -12,17 +13,29 @@ import { InfoBody } from "../info-body/InfoBody";
 import { Row } from "@/components/UI/row";
 import LikeBox from "../like";
 import Button from "../sort-button";
-import { countriesReduser } from "../reducer/reducer";
+import { countriesReducer } from "../reducer/reducer";
 import { CountryData } from "../add-card/index";
-import { COUNTRIES__DATA as initialCountries } from "@/pages/home/static/dummy-data.ts";
+// import { COUNTRIES__DATA as initialCountries } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
+// import { error } from "console";
+
+
 
 const CountriesCards: React.FC = () => {
-  const [countriesList, dispatch] = useReducer(
-    countriesReduser,
-    initialCountries,
-  );
+  const [countriesList, dispatch] = useReducer(countriesReducer, []);
   const [isCountryVisible, setIsCountryVisible] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/countries")
+      .then((response) => {
+        console.log(response.data);
+        dispatch({ type: "setInitialData", payload: response.data });
+      })
+      .catch((error) => {
+        console.error("Failed to fetch countries:", error);
+      });
+  }, []);
 
   const { lang } = useParams<{ lang: string }>();
 
@@ -34,7 +47,7 @@ const CountriesCards: React.FC = () => {
     dispatch({ type: "sort" });
   };
 
-  const handleAddCountry = (
+  const handleAddCountry = async (
     e: FormEvent<HTMLFormElement>,
     countryData: CountryData,
   ) => {
@@ -56,23 +69,40 @@ const CountriesCards: React.FC = () => {
       population: countryData.population,
       image: countryData.image,
       like: 0,
-      id: (Number(countriesList.at(-1)?.id) + 1).toString(), // Ensure this logic is correct
-      isMarkedForDelete: false, // Initialize as false (not marked for deletion)
+      id: (Number(countriesList.at(-1)?.id) + 1).toString(), 
+      isMarkedForDelete: false
     };
 
-    dispatch({
+   try{ 
+     const response =  await axios.post('http://localhost:3000/countries',newCountry);
+
+     dispatch({
       type: "add",
-      payload: newCountry,
+      payload: response.data,
     });
-
     setIsCountryVisible(false);
+   } catch (error){
+    console.error("Failed to add country:", error);
+   }
+
+
+   
+
+  
   };
 
-  const handleDeleteCountry = (id: string) => {
-    dispatch({ type: "delete", payload: { id } });
+  const handleDeleteCountry = async (id: string) => {
+     try {
+      await axios.delete(`http://localhost:3000/countries/${id}`)
+      
+      dispatch({type: 'delete', payload: {id}})
+     }catch (error) {
+      console.log("Failed to delete country", error)
+     }
   };
 
-  const handleRestoreCountry = (id: string) => {
+
+  const handleEditCountry = (id: string) => {
     dispatch({ type: "restore", payload: { id } });
   };
 
@@ -83,6 +113,9 @@ const CountriesCards: React.FC = () => {
   const translateCountryField = (field: { [key: string]: string }) => {
     return lang ? field[lang] || field["en"] : field["en"];
   };
+
+
+ 
 
   return (
     <section className={classes.countries}>
@@ -95,6 +128,7 @@ const CountriesCards: React.FC = () => {
           </div>
         </div>
         <AddCountry isPressed={isCountryVisible} onSubmit={handleAddCountry} />
+
         <Row className={classes["card-row"]}>
           {countriesList.map((country) => (
             <Card
@@ -138,7 +172,7 @@ const CountriesCards: React.FC = () => {
                   />
                   {country.isMarkedForDelete && (
                     <Button
-                      onClick={() => handleRestoreCountry(country.id)}
+                      onClick={() => handleEditCountry(country.id)}
                       title={lang === "ka" ? "აღდგენა" : "Restore"}
                     />
                   )}
@@ -148,6 +182,14 @@ const CountriesCards: React.FC = () => {
           ))}
         </Row>
       </Container>
+
+      {/*  <div> {isLoading ?"loading ......." : (
+        <div>
+        {count?.map((con: any, index: number) => {
+          return <div key={index}>{con.name.common}</div>;
+        })}
+      </div>
+      )}</div> */}
     </section>
   );
 };

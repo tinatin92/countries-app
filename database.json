@@ -18,24 +18,24 @@
       "like": "0",
       "image": "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg"
     },
-    {
-        "title": {
-          "en": "Japan",
-          "ka": "იაპონია"
-        },
-        "capital": {
-          "en": "Tokyo",
-          "ka": "იაპონია"
-        },
-        "population": "125100000",
-        "description": {
-          "en": "Japan, an island nation in East Asia, is known for its rich cultural heritage...",
-          "ka": "იაპონია, აღმოსავლეთ აზიაში მდებარე კუნძულოვანი ქვეყანა..."
-        },
-        "id": "1",
-        "like": "0",
-        "image": "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg"
+      {
+      "title": {
+        "en": "Japan",
+        "ka": "იაპონია"
       },
+      "capital": {
+        "en": "Tokyo",
+        "ka": "იაპონია"
+      },
+      "population": "125100000",
+      "description": {
+        "en": "Japan, an island nation in East Asia, is known for its rich cultural heritage...",
+        "ka": "იაპონია, აღმოსავლეთ აზიაში მდებარე კუნძულოვანი ქვეყანა..."
+      },
+      "id": "1",
+      "like": "0",
+      "image": "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg"
+    },
     {
       "id": "3",
       "title": {

@@ -12,7 +12,8 @@
     "format": "prettier . --write",
     "preview": "vite preview",
     "prepare": "husky",
-    "run-db": "npx json-server database.json"
+    "run-db": "npx json-server database.json",
+    "seed-db": "node seed-db.js"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^8.11.0",

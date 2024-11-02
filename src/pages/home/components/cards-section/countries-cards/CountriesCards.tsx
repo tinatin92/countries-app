@@ -19,8 +19,6 @@ import { CountryData } from "../add-card/index";
 import { Link } from "react-router-dom";
 // import { error } from "console";
 
-
-
 const CountriesCards: React.FC = () => {
   const [countriesList, dispatch] = useReducer(countriesReducer, []);
   const [isCountryVisible, setIsCountryVisible] = useState(false);
@@ -69,38 +67,35 @@ const CountriesCards: React.FC = () => {
       population: countryData.population,
       image: countryData.image,
       like: 0,
-      id: (Number(countriesList.at(-1)?.id) + 1).toString(), 
-      isMarkedForDelete: false
+      id: (Number(countriesList.at(-1)?.id) + 1).toString(),
+      isMarkedForDelete: false,
     };
 
-   try{ 
-     const response =  await axios.post('http://localhost:3000/countries',newCountry);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/countries",
+        newCountry,
+      );
 
-     dispatch({
-      type: "add",
-      payload: response.data,
-    });
-    setIsCountryVisible(false);
-   } catch (error){
-    console.error("Failed to add country:", error);
-   }
-
-
-   
-
-  
+      dispatch({
+        type: "add",
+        payload: response.data,
+      });
+      setIsCountryVisible(false);
+    } catch (error) {
+      console.error("Failed to add country:", error);
+    }
   };
 
   const handleDeleteCountry = async (id: string) => {
-     try {
-      await axios.delete(`http://localhost:3000/countries/${id}`)
-      
-      dispatch({type: 'delete', payload: {id}})
-     }catch (error) {
-      console.log("Failed to delete country", error)
-     }
-  };
+    try {
+      await axios.delete(`http://localhost:3000/countries/${id}`);
 
+      dispatch({ type: "delete", payload: { id } });
+    } catch (error) {
+      console.log("Failed to delete country", error);
+    }
+  };
 
   const handleEditCountry = (id: string) => {
     dispatch({ type: "restore", payload: { id } });
@@ -113,9 +108,6 @@ const CountriesCards: React.FC = () => {
   const translateCountryField = (field: { [key: string]: string }) => {
     return lang ? field[lang] || field["en"] : field["en"];
   };
-
-
- 
 
   return (
     <section className={classes.countries}>

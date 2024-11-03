@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import classes from './index.module.css';
+import classes from "./index.module.css";
 
 export type CountryData = {
   title: {
@@ -22,29 +22,44 @@ export type CountryData = {
 };
 
 interface EditCountryProps {
-  countryData: CountryData | null; // Make it nullable
-  onClose: () => void; // Prop for closing the edit form
-  onUpdate: (updatedCountry: CountryData) => void; // Prop for updating the country data
+  countryData: CountryData | null; 
+  onClose: () => void; 
+  onUpdate: (updatedCountry: CountryData) => void; 
 }
 
-const EditCountry: React.FC<EditCountryProps> = ({ countryData, onClose, onUpdate }) => {
-  const [localCountryData, setLocalCountryData] = useState<CountryData | null>(null);
+const EditCountry: React.FC<EditCountryProps> = ({
+  countryData,
+  onClose,
+  onUpdate,
+}) => {
+  const [localCountryData, setLocalCountryData] = useState<CountryData | null>(
+    null,
+  );
 
-  // Initialize local state when countryData changes
+  
   useEffect(() => {
     if (countryData) {
       setLocalCountryData(countryData);
     }
   }, [countryData]);
 
-  // Render nothing if no country data is available
+ 
   if (!localCountryData) return null;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
-    const [key, langKey] = name.split('.') as ['title' | 'capital' | 'description', 'en' | 'ka'];
+    const [key, langKey] = name.split(".") as [
+      "title" | "capital" | "description",
+      "en" | "ka",
+    ];
 
-    if (localCountryData && key in localCountryData && typeof localCountryData[key] === 'object') {
+    if (
+      localCountryData &&
+      key in localCountryData &&
+      typeof localCountryData[key] === "object"
+    ) {
       setLocalCountryData((prevData) => {
         if (prevData) {
           return {
@@ -55,33 +70,33 @@ const EditCountry: React.FC<EditCountryProps> = ({ countryData, onClose, onUpdat
             },
           };
         }
-        return prevData; // Fallback in case of null
+        return prevData; 
       });
     }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]; // Get the first selected file
+    const file = e.target.files?.[0]; 
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        const result = event.target?.result; // Use optional chaining to safely access result
+        const result = event.target?.result; 
         if (result) {
           setLocalCountryData((prevData) => ({
             ...prevData!,
-            image: result as string, // Update the localCountryData with the new image URL
+            image: result as string, 
           }));
         }
       };
-      reader.readAsDataURL(file); // Read the image as a data URL
+      reader.readAsDataURL(file);
     }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (localCountryData) {
-      onUpdate(localCountryData); // Call the update function passed via props
-      onClose(); // Close the edit form after updating
+      onUpdate(localCountryData); 
+      onClose(); 
     }
   };
 
@@ -89,7 +104,7 @@ const EditCountry: React.FC<EditCountryProps> = ({ countryData, onClose, onUpdat
     <div>
       <form className={classes.form} onSubmit={handleSubmit}>
         <div>
-          <label>Title (English)</label>
+          <label>Title</label>
           <input
             type="text"
             name="title.en"
@@ -98,7 +113,7 @@ const EditCountry: React.FC<EditCountryProps> = ({ countryData, onClose, onUpdat
           />
         </div>
         <div>
-          <label>Title (Georgian)</label>
+          <label>სათაური</label>
           <input
             type="text"
             name="title.ka"
@@ -108,7 +123,7 @@ const EditCountry: React.FC<EditCountryProps> = ({ countryData, onClose, onUpdat
         </div>
 
         <div>
-          <label>Capital (English)</label>
+          <label>Capital</label>
           <input
             type="text"
             name="capital.en"
@@ -117,7 +132,7 @@ const EditCountry: React.FC<EditCountryProps> = ({ countryData, onClose, onUpdat
           />
         </div>
         <div>
-          <label>Capital (Georgian)</label>
+          <label>დედაქალაქი</label>
           <input
             type="text"
             name="capital.ka"
@@ -127,16 +142,16 @@ const EditCountry: React.FC<EditCountryProps> = ({ countryData, onClose, onUpdat
         </div>
 
         <div>
-          <label>Description (English)</label>
-          <textarea
+          <label>Description</label>
+          <textarea className={classes.textarea}
             name="description.en"
             value={localCountryData.description.en}
             onChange={handleChange}
           />
         </div>
         <div>
-          <label>Description (Georgian)</label>
-          <textarea
+          <label>აღწერა</label>
+          <textarea className={classes.textarea}
             name="description.ka"
             value={localCountryData.description.ka}
             onChange={handleChange}
@@ -150,7 +165,10 @@ const EditCountry: React.FC<EditCountryProps> = ({ countryData, onClose, onUpdat
             name="population"
             value={localCountryData.population}
             onChange={(e) =>
-              setLocalCountryData({ ...localCountryData, population: e.target.value })
+              setLocalCountryData({
+                ...localCountryData,
+                population: e.target.value,
+              })
             }
           />
         </div>
@@ -168,7 +186,9 @@ const EditCountry: React.FC<EditCountryProps> = ({ countryData, onClose, onUpdat
           />
         )}
         <button type="submit">Save Changes</button>
-        <button type="button" onClick={onClose}>Cancel</button>
+        <button type="button" onClick={onClose}>
+          Cancel
+        </button>
       </form>
     </div>
   );

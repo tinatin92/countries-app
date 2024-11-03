@@ -16,12 +16,10 @@ import Button from "../sort-button";
 import { countriesReducer } from "../reducer/reducer";
 import { CountryData } from "../add-card/index";
 import { Link } from "react-router-dom";
-import EditCountry from '../edit-card/index';
-
-
+import EditCountry from "../edit-card/index";
 
 interface Country {
-  title: { [key: string]: string };   
+  title: { [key: string]: string };
   capital: { [key: string]: string };
   description: { [key: string]: string };
   population: string;
@@ -129,18 +127,21 @@ const CountriesCards: React.FC = () => {
       id: country.id,
       isMarkedForDelete: country.isMarkedForDelete,
     };
-  
+
     setCountryToEdit(countryData);
   };
 
   const handleCountryUpdate = async (updatedCountry: CountryData) => {
     try {
-      const response = await axios.put(`http://localhost:3000/countries/${updatedCountry.id}`, updatedCountry);
+      const response = await axios.put(
+        `http://localhost:3000/countries/${updatedCountry.id}`,
+        updatedCountry,
+      );
       dispatch({
         type: "update",
         payload: response.data,
       });
-      setCountryToEdit(null); // Close the edit form after updating
+      setCountryToEdit(null); 
     } catch (error) {
       console.error("Failed to update country:", error);
     }
@@ -148,7 +149,7 @@ const CountriesCards: React.FC = () => {
 
   const handleCountryVisibility = () => {
     setIsCountryVisible((prev) => !prev);
-    setCountryToEdit(null); // Reset country to edit when toggling visibility
+    setCountryToEdit(null); 
   };
 
   const translateCountryField = (field: { [key: string]: string }) => {
@@ -166,12 +167,12 @@ const CountriesCards: React.FC = () => {
           </div>
         </div>
         <AddCountry isPressed={isCountryVisible} onSubmit={handleAddCountry} />
-        
+
         {countryToEdit && (
           <EditCountry
             countryData={countryToEdit}
             onClose={() => setCountryToEdit(null)}
-            onUpdate={handleCountryUpdate} // Pass the update handler
+            onUpdate={handleCountryUpdate} 
           />
         )}
 
@@ -216,9 +217,9 @@ const CountriesCards: React.FC = () => {
                     onClick={() => handleDeleteCountry(country.id)}
                     title={lang === "ka" ? "წაშლა" : "Delete"}
                   />
-                  
+
                   <Button
-                    onClick={() => handleEditCountry(country)} 
+                    onClick={() => handleEditCountry(country)}
                     title={lang === "ka" ? "შესწორება" : "Edit"}
                   />
                 </div>

@@ -17,7 +17,7 @@ type actionsType =
   | { type: "sort" }
   | { type: "delete"; payload: { id: string } }
   | { type: "add"; payload: Country }
-  | { type: "update"; payload: Country } 
+  | { type: "update"; payload: Country }
   | { type: "setInitialData"; payload: Country[] };
 
 export const countriesReducer = (

@@ -17,7 +17,7 @@ type actionsType =
   | { type: "sort" }
   | { type: "delete"; payload: { id: string } }
   | { type: "add"; payload: Country }
-  | { type: "restore"; payload: { id: string } }
+  | { type: "update"; payload: Country } 
   | { type: "setInitialData"; payload: Country[] };
 
 export const countriesReducer = (
@@ -53,33 +53,16 @@ export const countriesReducer = (
     return countries.filter((country) => country.id !== action.payload.id);
   }
 
-  if (action.type === "restore") {
-    const updatedCountries = countries.map((country) => {
+  if (action.type === "update") {
+    return countries.map((country) => {
+      // Check if the current country matches the ID from the payload
       if (country.id === action.payload.id) {
-        return { ...country, isMarkedForDelete: false };
+        // Return the updated country data
+        return { ...action.payload, isMarkedForDelete: false };
       }
+      // Return the country unchanged if it doesn't match
       return country;
     });
-
-    const restoredCountry = updatedCountries.find(
-      (country) => country.id === action.payload.id,
-    );
-
-    if (restoredCountry && restoredCountry.originalIndex !== undefined) {
-      const remainingCountries = updatedCountries.filter(
-        (country) => country.id !== action.payload.id,
-      );
-
-      remainingCountries.splice(
-        restoredCountry.originalIndex,
-        0,
-        restoredCountry,
-      );
-
-      return remainingCountries;
-    }
-
-    return updatedCountries;
   }
 
   if (action.type === "add") {

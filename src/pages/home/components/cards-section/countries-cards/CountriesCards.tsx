@@ -15,13 +15,26 @@ import LikeBox from "../like";
 import Button from "../sort-button";
 import { countriesReducer } from "../reducer/reducer";
 import { CountryData } from "../add-card/index";
-// import { COUNTRIES__DATA as initialCountries } from "@/pages/home/static/dummy-data.ts";
 import { Link } from "react-router-dom";
-// import { error } from "console";
+import EditCountry from '../edit-card/index';
+
+
+
+interface Country {
+  title: { [key: string]: string };   
+  capital: { [key: string]: string };
+  description: { [key: string]: string };
+  population: string;
+  image: string;
+  like: number;
+  id: string;
+  isMarkedForDelete: boolean;
+}
 
 const CountriesCards: React.FC = () => {
   const [countriesList, dispatch] = useReducer(countriesReducer, []);
   const [isCountryVisible, setIsCountryVisible] = useState(false);
+  const [countryToEdit, setCountryToEdit] = useState<CountryData | null>(null);
 
   useEffect(() => {
     axios
@@ -90,19 +103,52 @@ const CountriesCards: React.FC = () => {
   const handleDeleteCountry = async (id: string) => {
     try {
       await axios.delete(`http://localhost:3000/countries/${id}`);
-
       dispatch({ type: "delete", payload: { id } });
     } catch (error) {
       console.log("Failed to delete country", error);
     }
   };
 
-  const handleEditCountry = (id: string) => {
-    dispatch({ type: "restore", payload: { id } });
+  const handleEditCountry = (country: Country) => {
+    const countryData: CountryData = {
+      title: {
+        en: country.title.en,
+        ka: country.title.ka,
+      },
+      capital: {
+        en: country.capital.en,
+        ka: country.capital.ka,
+      },
+      description: {
+        en: country.description.en,
+        ka: country.description.ka,
+      },
+      population: country.population,
+      image: country.image,
+      like: country.like,
+      id: country.id,
+      isMarkedForDelete: country.isMarkedForDelete,
+    };
+  
+    setCountryToEdit(countryData);
+  };
+
+  const handleCountryUpdate = async (updatedCountry: CountryData) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/countries/${updatedCountry.id}`, updatedCountry);
+      dispatch({
+        type: "update",
+        payload: response.data,
+      });
+      setCountryToEdit(null); // Close the edit form after updating
+    } catch (error) {
+      console.error("Failed to update country:", error);
+    }
   };
 
   const handleCountryVisibility = () => {
     setIsCountryVisible((prev) => !prev);
+    setCountryToEdit(null); // Reset country to edit when toggling visibility
   };
 
   const translateCountryField = (field: { [key: string]: string }) => {
@@ -120,6 +166,14 @@ const CountriesCards: React.FC = () => {
           </div>
         </div>
         <AddCountry isPressed={isCountryVisible} onSubmit={handleAddCountry} />
+        
+        {countryToEdit && (
+          <EditCountry
+            countryData={countryToEdit}
+            onClose={() => setCountryToEdit(null)}
+            onUpdate={handleCountryUpdate} // Pass the update handler
+          />
+        )}
 
         <Row className={classes["card-row"]}>
           {countriesList.map((country) => (
@@ -162,26 +216,17 @@ const CountriesCards: React.FC = () => {
                     onClick={() => handleDeleteCountry(country.id)}
                     title={lang === "ka" ? "წაშლა" : "Delete"}
                   />
-                  {country.isMarkedForDelete && (
-                    <Button
-                      onClick={() => handleEditCountry(country.id)}
-                      title={lang === "ka" ? "აღდგენა" : "Restore"}
-                    />
-                  )}
+                  
+                  <Button
+                    onClick={() => handleEditCountry(country)} 
+                    title={lang === "ka" ? "შესწორება" : "Edit"}
+                  />
                 </div>
               </CardInfo>
             </Card>
           ))}
         </Row>
       </Container>
-
-      {/*  <div> {isLoading ?"loading ......." : (
-        <div>
-        {count?.map((con: any, index: number) => {
-          return <div key={index}>{con.name.common}</div>;
-        })}
-      </div>
-      )}</div> */}
     </section>
   );
 };

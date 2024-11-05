@@ -29,6 +29,13 @@ export type CountryData = {
   isMarkedForDelete: boolean;
 };
 
+
+export interface GetCountriesResponse {
+  countries: CountryData[]; 
+}
+
+export type AddUpdateCountryResponse = CountryData;
+
 const AddCountry: React.FC<AddCountryProps> = ({ isPressed, onSubmit }) => {
   const [countryData, setCountryData] = useState<CountryData>({
     title: { en: "", ka: "" },

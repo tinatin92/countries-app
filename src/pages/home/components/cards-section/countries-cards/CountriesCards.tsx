@@ -1,6 +1,6 @@
-import { FormEvent, useReducer, useState, useEffect } from "react";
+import { FormEvent, /* useReducer, */ useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import AddCountry from "../add-card";
 import classes from "./CountriesCards.module.css";
 import { Container } from "@/components/UI/container";
@@ -13,10 +13,18 @@ import { InfoBody } from "../info-body/InfoBody";
 import { Row } from "@/components/UI/row";
 import LikeBox from "../like";
 import Button from "../sort-button";
-import { countriesReducer } from "../reducer/reducer";
+
 import { CountryData } from "../add-card/index";
 import { Link } from "react-router-dom";
 import EditCountry from "../edit-card/index";
+import {
+  getCountries,
+  deleteCountry,
+  addCaontry,
+  updateCountry,
+  likeCountry,
+ 
+} from "@/api/countries";
 
 interface Country {
   title: { [key: string]: string };
@@ -30,30 +38,59 @@ interface Country {
 }
 
 const CountriesCards: React.FC = () => {
-  const [countriesList, dispatch] = useReducer(countriesReducer, []);
   const [isCountryVisible, setIsCountryVisible] = useState(false);
   const [countryToEdit, setCountryToEdit] = useState<CountryData | null>(null);
 
+  const [countriesList, setCountriesList] = useState<Country[]>([]);
+
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/countries")
-      .then((response) => {
-        console.log(response.data);
-        dispatch({ type: "setInitialData", payload: response.data });
-      })
-      .catch((error) => {
-        console.error("Failed to fetch countries:", error);
-      });
+    getCountries().then((countries) => {
+      return setCountriesList(countries);
+    });
   }, []);
 
   const { lang } = useParams<{ lang: string }>();
 
-  const handleLike = (id: string) => {
-    dispatch({ type: "upLike", payload: { id } });
+  const handleLike = async (id: number) => {
+    try {
+      const likedCountry = await likeCountry(id);
+      setCountriesList((prevCountry) => {
+        return prevCountry.map((country) => {
+          if (country.id === likedCountry.id) {
+            return { ...country, like: country.like + 1 };
+          } else {
+            return country;
+          }
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleSortCards = () => {
-    dispatch({ type: "sort" });
+  const handleSortCards = async () => {
+    /* try {
+      const response = await sortCountries();
+
+      console.log("Countries fetched:", response);
+
+      if (response && response.length > 0) {
+        const sortedData = response.sort((a: Country, b: Country) => {
+          return b.like - a.like;
+
+         
+        });
+
+        setCountriesList(sortedData);
+      }
+      
+       await Promise.all(sortedData.map(country => 
+                getSortedCountries(country) // Assuming this sends the country data back to the server
+            ));
+
+    } catch (error) {
+      console.log("Error sorting countries:", error);
+    } */
   };
 
   const handleAddCountry = async (
@@ -83,15 +120,10 @@ const CountriesCards: React.FC = () => {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:3000/countries",
-        newCountry,
-      );
+      const addedCountry = await addCaontry(newCountry);
 
-      dispatch({
-        type: "add",
-        payload: response.data,
-      });
+      setCountriesList((prevCountries) => [...prevCountries, addedCountry]);
+
       setIsCountryVisible(false);
     } catch (error) {
       console.error("Failed to add country:", error);
@@ -100,10 +132,13 @@ const CountriesCards: React.FC = () => {
 
   const handleDeleteCountry = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:3000/countries/${id}`);
-      dispatch({ type: "delete", payload: { id } });
+      await deleteCountry(id);
+
+      setCountriesList((prevCountries) => {
+        return prevCountries.filter((country) => country.id !== id);
+      });
     } catch (error) {
-      console.log("Failed to delete country", error);
+      console.log(error);
     }
   };
 
@@ -131,25 +166,27 @@ const CountriesCards: React.FC = () => {
     setCountryToEdit(countryData);
   };
 
-  const handleCountryUpdate = async (updatedCountry: CountryData) => {
+  const handleCountryUpdate = async (countryToUpdate: CountryData) => {
     try {
-      const response = await axios.put(
-        `http://localhost:3000/countries/${updatedCountry.id}`,
-        updatedCountry,
-      );
-      dispatch({
-        type: "update",
-        payload: response.data,
+      const updatedCountry = await updateCountry(countryToUpdate);
+      setCountryToEdit(null);
+      setCountriesList((prevCountries) => {
+        return prevCountries.map((country) => {
+          if (country.id === updatedCountry.id) {
+            return updatedCountry;
+          } else {
+            return country;
+          }
+        });
       });
-      setCountryToEdit(null); 
     } catch (error) {
-      console.error("Failed to update country:", error);
+      console.log(error);
     }
   };
 
   const handleCountryVisibility = () => {
     setIsCountryVisible((prev) => !prev);
-    setCountryToEdit(null); 
+    setCountryToEdit(null);
   };
 
   const translateCountryField = (field: { [key: string]: string }) => {
@@ -172,7 +209,7 @@ const CountriesCards: React.FC = () => {
           <EditCountry
             countryData={countryToEdit}
             onClose={() => setCountryToEdit(null)}
-            onUpdate={handleCountryUpdate} 
+            onUpdate={handleCountryUpdate}
           />
         )}
 
@@ -193,7 +230,7 @@ const CountriesCards: React.FC = () => {
                 <InfoBody>
                   <LikeBox
                     like={country.like}
-                    onClick={() => handleLike(country.id)}
+                    onClick={() => handleLike(+country.id)}
                   />
                   <CountryInfo>
                     <div>{lang === "ka" ? "დედაქალაქი:" : "Capital:"}</div>{" "}

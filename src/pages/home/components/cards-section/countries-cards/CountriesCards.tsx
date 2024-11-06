@@ -23,8 +23,8 @@ import {
   addCaontry,
   updateCountry,
   likeCountry,
- 
 } from "@/api/countries";
+import { useQuery } from "@tanstack/react-query";
 
 interface Country {
   title: { [key: string]: string };
@@ -41,18 +41,29 @@ const CountriesCards: React.FC = () => {
   const [isCountryVisible, setIsCountryVisible] = useState(false);
   const [countryToEdit, setCountryToEdit] = useState<CountryData | null>(null);
 
-  const [countriesList, setCountriesList] = useState<Country[]>([]);
+  // const [countriesList, setCountriesList] = useState<Country[]>([]);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     getCountries().then((countries) => {
       return setCountriesList(countries);
     });
-  }, []);
+  }, []); */
+
+
+  const {data:countriesList, isLoading, isError} = useQuery({
+    queryKey : ["countries-list"],
+    queryFn:getCountries
+  })
+
+
+  console.log(countriesList)
+  console.log("loading",isLoading)
+  console.log("error", isError)
 
   const { lang } = useParams<{ lang: string }>();
 
   const handleLike = async (id: number) => {
-    try {
+ /*    try {
       const likedCountry = await likeCountry(id);
       setCountriesList((prevCountry) => {
         return prevCountry.map((country) => {
@@ -65,7 +76,7 @@ const CountriesCards: React.FC = () => {
       });
     } catch (error) {
       console.log(error);
-    }
+    } */
   };
 
   const handleSortCards = async () => {
@@ -119,7 +130,7 @@ const CountriesCards: React.FC = () => {
       isMarkedForDelete: false,
     };
 
-    try {
+   /*  try {
       const addedCountry = await addCaontry(newCountry);
 
       setCountriesList((prevCountries) => [...prevCountries, addedCountry]);
@@ -127,11 +138,11 @@ const CountriesCards: React.FC = () => {
       setIsCountryVisible(false);
     } catch (error) {
       console.error("Failed to add country:", error);
-    }
+    } */
   };
 
   const handleDeleteCountry = async (id: string) => {
-    try {
+   /*  try {
       await deleteCountry(id);
 
       setCountriesList((prevCountries) => {
@@ -139,7 +150,7 @@ const CountriesCards: React.FC = () => {
       });
     } catch (error) {
       console.log(error);
-    }
+    } */
   };
 
   const handleEditCountry = (country: Country) => {
@@ -167,7 +178,7 @@ const CountriesCards: React.FC = () => {
   };
 
   const handleCountryUpdate = async (countryToUpdate: CountryData) => {
-    try {
+    /* try {
       const updatedCountry = await updateCountry(countryToUpdate);
       setCountryToEdit(null);
       setCountriesList((prevCountries) => {
@@ -181,7 +192,7 @@ const CountriesCards: React.FC = () => {
       });
     } catch (error) {
       console.log(error);
-    }
+    } */
   };
 
   const handleCountryVisibility = () => {
@@ -192,6 +203,14 @@ const CountriesCards: React.FC = () => {
   const translateCountryField = (field: { [key: string]: string }) => {
     return lang ? field[lang] || field["en"] : field["en"];
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError || !countriesList) {
+    return <div>Error loading countries</div>;
+  }
 
   return (
     <section className={classes.countries}>
@@ -214,6 +233,7 @@ const CountriesCards: React.FC = () => {
         )}
 
         <Row className={classes["card-row"]}>
+    
           {countriesList.map((country) => (
             <Card
               isMarkedForDelete={country.isMarkedForDelete}

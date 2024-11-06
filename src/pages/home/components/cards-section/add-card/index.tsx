@@ -29,9 +29,8 @@ export type CountryData = {
   isMarkedForDelete: boolean;
 };
 
-
 export interface GetCountriesResponse {
-  countries: CountryData[]; 
+  countries: CountryData[];
 }
 
 export type AddUpdateCountryResponse = CountryData;

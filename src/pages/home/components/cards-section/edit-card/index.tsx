@@ -22,9 +22,9 @@ export type CountryData = {
 };
 
 interface EditCountryProps {
-  countryData: CountryData | null; 
-  onClose: () => void; 
-  onUpdate: (updatedCountry: CountryData) => void; 
+  countryData: CountryData | null;
+  onClose: () => void;
+  onUpdate: (updatedCountry: CountryData) => void;
 }
 
 const EditCountry: React.FC<EditCountryProps> = ({
@@ -36,14 +36,12 @@ const EditCountry: React.FC<EditCountryProps> = ({
     null,
   );
 
-  
   useEffect(() => {
     if (countryData) {
       setLocalCountryData(countryData);
     }
   }, [countryData]);
 
- 
   if (!localCountryData) return null;
 
   const handleChange = (
@@ -70,21 +68,21 @@ const EditCountry: React.FC<EditCountryProps> = ({
             },
           };
         }
-        return prevData; 
+        return prevData;
       });
     }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]; 
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        const result = event.target?.result; 
+        const result = event.target?.result;
         if (result) {
           setLocalCountryData((prevData) => ({
             ...prevData!,
-            image: result as string, 
+            image: result as string,
           }));
         }
       };
@@ -95,8 +93,8 @@ const EditCountry: React.FC<EditCountryProps> = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (localCountryData) {
-      onUpdate(localCountryData); 
-      onClose(); 
+      onUpdate(localCountryData);
+      onClose();
     }
   };
 
@@ -143,7 +141,8 @@ const EditCountry: React.FC<EditCountryProps> = ({
 
         <div>
           <label>Description</label>
-          <textarea className={classes.textarea}
+          <textarea
+            className={classes.textarea}
             name="description.en"
             value={localCountryData.description.en}
             onChange={handleChange}
@@ -151,7 +150,8 @@ const EditCountry: React.FC<EditCountryProps> = ({
         </div>
         <div>
           <label>აღწერა</label>
-          <textarea className={classes.textarea}
+          <textarea
+            className={classes.textarea}
             name="description.ka"
             value={localCountryData.description.ka}
             onChange={handleChange}

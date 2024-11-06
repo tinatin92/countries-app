@@ -1,4 +1,4 @@
-import { FormEvent, /* useReducer, */ useState, useEffect } from "react";
+import { FormEvent, /* useReducer, */ useState } from "react";
 import { useParams } from "react-router-dom";
 // import axios from "axios";
 import AddCountry from "../add-card";
@@ -24,7 +24,7 @@ import {
   updateCountry,
   likeCountry,
 } from "@/api/countries";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
 
 interface Country {
   title: { [key: string]: string };
@@ -41,6 +41,8 @@ const CountriesCards: React.FC = () => {
   const [isCountryVisible, setIsCountryVisible] = useState(false);
   const [countryToEdit, setCountryToEdit] = useState<CountryData | null>(null);
 
+  const queryClient = useQueryClient();
+
   // const [countriesList, setCountriesList] = useState<Country[]>([]);
 
  /*  useEffect(() => {
@@ -50,13 +52,105 @@ const CountriesCards: React.FC = () => {
   }, []); */
 
 
-  const {data:countriesList, isLoading, isError} = useQuery({
-    queryKey : ["countries-list"],
-    queryFn:getCountries
-  })
+  const { data: countriesList = [], isLoading, isError } = useQuery({
+    queryKey: ["countries-list"],
+    queryFn: getCountries,
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteCountry,
+    
+  });
+  
+
+  const handleDeleteCountry = async (id: string) => {
+    /*  try {
+       await deleteCountry(id);
+ 
+       setCountriesList((prevCountries) => {
+         return prevCountries.filter((country) => country.id !== id);
+       });
+     } catch (error) {
+       console.log(error);
+     } */
+       deleteMutation.mutate(id)
+   };
+
+   const updateMutation = useMutation({
+    mutationFn: updateCountry,
+   
+  });
 
 
-  console.log(countriesList)
+  const handleCountryUpdate = async (countryToUpdate: CountryData) => {
+    /* try {
+      const updatedCountry = await updateCountry(countryToUpdate);
+      setCountryToEdit(null);
+      setCountriesList((prevCountries) => {
+        return prevCountries.map((country) => {
+          if (country.id === updatedCountry.id) {
+            return updatedCountry;
+          } else {
+            return country;
+          }
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    } */
+      updateMutation.mutate(countryToUpdate)
+  };
+  
+  const addMutation = useMutation({
+    mutationFn:addCaontry
+    
+  });
+
+
+
+  const handleAddCountry = async (
+    e: FormEvent<HTMLFormElement>,
+    countryData: CountryData,
+  ) => {
+    e.preventDefault();
+
+    const newCountry: CountryData = {
+      title: {
+        en: countryData.title.en,
+        ka: countryData.title.ka,
+      },
+      capital: {
+        en: countryData.capital.en,
+        ka: countryData.capital.ka,
+      },
+      description: {
+        en: countryData.description.en,
+        ka: countryData.description.ka,
+      },
+      population: countryData.population,
+      image: countryData.image,
+      like: 0,
+      id: (Number(countriesList.at(-1)?.id) + 1).toString(),
+      isMarkedForDelete: false,
+    };
+
+   /*  try {
+      const addedCountry = await addCaontry(newCountry);
+
+      setCountriesList((prevCountries) => [...prevCountries, addedCountry]);
+
+      setIsCountryVisible(false);
+    } catch (error) {
+      console.error("Failed to add country:", error);
+    } */
+
+      addMutation.mutate(newCountry)
+  };
+  
+
+
+
+  console.log("countries data",countriesList)
   console.log("loading",isLoading)
   console.log("error", isError)
 
@@ -104,54 +198,9 @@ const CountriesCards: React.FC = () => {
     } */
   };
 
-  const handleAddCountry = async (
-    e: FormEvent<HTMLFormElement>,
-    countryData: CountryData,
-  ) => {
-    e.preventDefault();
+ 
 
-    const newCountry: CountryData = {
-      title: {
-        en: countryData.title.en,
-        ka: countryData.title.ka,
-      },
-      capital: {
-        en: countryData.capital.en,
-        ka: countryData.capital.ka,
-      },
-      description: {
-        en: countryData.description.en,
-        ka: countryData.description.ka,
-      },
-      population: countryData.population,
-      image: countryData.image,
-      like: 0,
-      id: (Number(countriesList.at(-1)?.id) + 1).toString(),
-      isMarkedForDelete: false,
-    };
-
-   /*  try {
-      const addedCountry = await addCaontry(newCountry);
-
-      setCountriesList((prevCountries) => [...prevCountries, addedCountry]);
-
-      setIsCountryVisible(false);
-    } catch (error) {
-      console.error("Failed to add country:", error);
-    } */
-  };
-
-  const handleDeleteCountry = async (id: string) => {
-   /*  try {
-      await deleteCountry(id);
-
-      setCountriesList((prevCountries) => {
-        return prevCountries.filter((country) => country.id !== id);
-      });
-    } catch (error) {
-      console.log(error);
-    } */
-  };
+  
 
   const handleEditCountry = (country: Country) => {
     const countryData: CountryData = {
@@ -177,23 +226,7 @@ const CountriesCards: React.FC = () => {
     setCountryToEdit(countryData);
   };
 
-  const handleCountryUpdate = async (countryToUpdate: CountryData) => {
-    /* try {
-      const updatedCountry = await updateCountry(countryToUpdate);
-      setCountryToEdit(null);
-      setCountriesList((prevCountries) => {
-        return prevCountries.map((country) => {
-          if (country.id === updatedCountry.id) {
-            return updatedCountry;
-          } else {
-            return country;
-          }
-        });
-      });
-    } catch (error) {
-      console.log(error);
-    } */
-  };
+ 
 
   const handleCountryVisibility = () => {
     setIsCountryVisible((prev) => !prev);

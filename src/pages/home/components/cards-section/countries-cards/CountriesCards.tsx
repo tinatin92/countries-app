@@ -11,7 +11,7 @@ import { CardInfo } from "../card-info/CardInfo";
 import { CountryInfo } from "../country-info/CountryInfo";
 import { InfoBody } from "../info-body/InfoBody";
 import { Row } from "@/components/UI/row";
-import LikeBox from "../like";
+// import LikeBox from "../like";
 import Button from "../sort-button";
 
 import { CountryData } from "../add-card/index";
@@ -22,9 +22,9 @@ import {
   deleteCountry,
   addCaontry,
   updateCountry,
-  likeCountry,
+
 } from "@/api/countries";
-import { useQuery, useMutation, useQueryClient} from "@tanstack/react-query";
+import { useQuery, useMutation} from "@tanstack/react-query";
 
 interface Country {
   title: { [key: string]: string };
@@ -41,7 +41,7 @@ const CountriesCards: React.FC = () => {
   const [isCountryVisible, setIsCountryVisible] = useState(false);
   const [countryToEdit, setCountryToEdit] = useState<CountryData | null>(null);
 
-  const queryClient = useQueryClient();
+
 
   // const [countriesList, setCountriesList] = useState<Country[]>([]);
 
@@ -52,12 +52,12 @@ const CountriesCards: React.FC = () => {
   }, []); */
 
 
-  const { data: countriesList = [], isLoading, isError } = useQuery({
+  const { data: countriesList, isLoading, isError } = useQuery({
     queryKey: ["countries-list"],
     queryFn: getCountries,
   });
 
-  const deleteMutation = useMutation({
+  const {mutate:deleteMutation} = useMutation({
     mutationFn: deleteCountry,
     
   });
@@ -73,10 +73,14 @@ const CountriesCards: React.FC = () => {
      } catch (error) {
        console.log(error);
      } */
-       deleteMutation.mutate(id)
+       deleteMutation(id)
    };
 
-   const updateMutation = useMutation({
+
+
+
+
+   const {mutate:updateMutation,  isError: isUpdateError} = useMutation({
     mutationFn: updateCountry,
    
   });
@@ -98,10 +102,10 @@ const CountriesCards: React.FC = () => {
     } catch (error) {
       console.log(error);
     } */
-      updateMutation.mutate(countryToUpdate)
+      updateMutation(countryToUpdate)
   };
   
-  const addMutation = useMutation({
+  const {mutate:addMutation} = useMutation({
     mutationFn:addCaontry
     
   });
@@ -130,7 +134,7 @@ const CountriesCards: React.FC = () => {
       population: countryData.population,
       image: countryData.image,
       like: 0,
-      id: (Number(countriesList.at(-1)?.id) + 1).toString(),
+      id: (Number(countriesList?.at(-1)?.id) + 1).toString(),
       isMarkedForDelete: false,
     };
 
@@ -144,34 +148,10 @@ const CountriesCards: React.FC = () => {
       console.error("Failed to add country:", error);
     } */
 
-      addMutation.mutate(newCountry)
+      addMutation(newCountry)
   };
   
 
-
-
-  console.log("countries data",countriesList)
-  console.log("loading",isLoading)
-  console.log("error", isError)
-
-  const { lang } = useParams<{ lang: string }>();
-
-  const handleLike = async (id: number) => {
- /*    try {
-      const likedCountry = await likeCountry(id);
-      setCountriesList((prevCountry) => {
-        return prevCountry.map((country) => {
-          if (country.id === likedCountry.id) {
-            return { ...country, like: country.like + 1 };
-          } else {
-            return country;
-          }
-        });
-      });
-    } catch (error) {
-      console.log(error);
-    } */
-  };
 
   const handleSortCards = async () => {
     /* try {
@@ -227,11 +207,20 @@ const CountriesCards: React.FC = () => {
   };
 
  
+  console.log("countries data",countriesList)
+  console.log("loading",isLoading)
+  console.log("error", isError)
 
   const handleCountryVisibility = () => {
     setIsCountryVisible((prev) => !prev);
     setCountryToEdit(null);
   };
+
+  /* const handleLike =() =>{
+    console.log("sorry cant like")
+  } */
+
+  const { lang } = useParams<{ lang: string }>();
 
   const translateCountryField = (field: { [key: string]: string }) => {
     return lang ? field[lang] || field["en"] : field["en"];
@@ -281,10 +270,10 @@ const CountriesCards: React.FC = () => {
               <CardInfo>
                 <h2>{translateCountryField(country.title)}</h2>
                 <InfoBody>
-                  <LikeBox
+                {/*   <LikeBox
                     like={country.like}
-                    onClick={() => handleLike(+country.id)}
-                  />
+                    onClick={() => handleLike(country.id!)}
+                  /> */}
                   <CountryInfo>
                     <div>{lang === "ka" ? "დედაქალაქი:" : "Capital:"}</div>{" "}
                     {translateCountryField(country.capital)}
@@ -308,9 +297,11 @@ const CountriesCards: React.FC = () => {
                     title={lang === "ka" ? "წაშლა" : "Delete"}
                   />
 
-                  <Button
+                  <Button 
+                    
                     onClick={() => handleEditCountry(country)}
                     title={lang === "ka" ? "შესწორება" : "Edit"}
+                    disabled={isUpdateError} 
                   />
                 </div>
               </CardInfo>

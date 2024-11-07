@@ -1,11 +1,13 @@
+import React from "react";
 import classes from "./index.module.css";
 
-const Button: React.FC<{ onClick: () => void; title: string }> = ({
+const Button: React.FC<{ onClick: () => void; title: string; disabled?: boolean }> = ({
   onClick,
   title,
+  disabled = false,  // default to false if not provided
 }) => {
   return (
-    <button onClick={onClick} className={classes.button}>
+    <button onClick={onClick} disabled={disabled} className={classes.button}>
       {title}
     </button>
   );

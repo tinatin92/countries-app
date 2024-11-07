@@ -31,36 +31,36 @@ export const getCountries = async (): Promise<Country[] | undefined> => {
 };
 
 
-export const deleteCountry = async (id: string) => {
+export const deleteCountry = async (id: string): Promise<Country[] | undefined> => {
   try {
-    const response = await httpClient.delete(`/countries/${id}`);
+    const response = await httpClient.delete<Country[]>(`/countries/${id}`);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const addCaontry = async (country: CountryData) => {
+export const addCaontry = async (country: CountryData): Promise<Country[] | undefined> => {
   try {
-    const response = await httpClient.post("/countries", country);
+    const response = await httpClient.post<Country[]>("/countries", country);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const updateCountry = async (country: CountryData) => {
+export const updateCountry = async (country: CountryData): Promise<Country[] | undefined> => {
   try {
-    const response = await httpClient.put(`/countries/${country.id}`, country);
+    const response = await httpClient.put<Country[]>(`/countries/${country.id}`, country);
     return response.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const likeCountry = async (id: number) => {
+export const likeCountry = async (id: string): Promise<Country[] | undefined> => {
   try {
-    const response = await httpClient.patch(`/countries/${id}`);
+    const response = await httpClient.put<Country[]>(`/countries/${id}`);
     return response.data;
   } catch (error) {
     console.log(error);

@@ -1,26 +1,25 @@
-import { useEffect, useState } from "react";
-import CountrieDetail from "../../components/country-detail";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { CountryData } from "../../components/cards-section/add-card/index";
+import { useQuery } from "@tanstack/react-query";
+import CountrieDetail from "../../components/country-detail";
+import { getCountryDetail } from "@/api/countries";
+import { Country } from "../../components/cards-section/countries-cards/CountriesCards";
 
 const CountrieDetailPage: React.FC = () => {
-  const [countryDetail, setCountryDetail] = useState<CountryData | null>(null);
   const { id, lang } = useParams<{ id: string; lang: string }>();
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3000/countries/${id}`)
-      .then((response) => {
-        setCountryDetail(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching country data:", error);
-      });
-  }, [id]);
 
-  if (!countryDetail) {
+  const { data: countryDetail, isLoading, isError } = useQuery<Country | undefined>({
+    queryKey: ["country-detail", id],
+    queryFn: () => getCountryDetail(id!),
+    enabled: !!id, 
+  });
+
+  if (isLoading) {
     return <p>Loading country details...</p>;
+  }
+
+  if (isError || !countryDetail) {
+    return <p>Country not found or error loading details.</p>;  
   }
 
   const language = lang === "en" || lang === "ka" ? lang : "en";

@@ -1,6 +1,6 @@
-import { FormEvent, /* useReducer, */ useState } from "react";
-import { useParams } from "react-router-dom";
-// import axios from "axios";
+import { FormEvent, /* useReducer, */ useState, useRef } from "react";
+
+import { useParams, useSearchParams } from "react-router-dom";
 import AddCountry from "../add-card";
 import classes from "./CountriesCards.module.css";
 import { Container } from "@/components/UI/container";
@@ -11,7 +11,7 @@ import { CardInfo } from "../card-info/CardInfo";
 import { CountryInfo } from "../country-info/CountryInfo";
 import { InfoBody } from "../info-body/InfoBody";
 import { Row } from "@/components/UI/row";
-// import LikeBox from "../like";
+import LikeBox from "../like";
 import Button from "../sort-button";
 
 import { CountryData } from "../add-card/index";
@@ -22,11 +22,17 @@ import {
   deleteCountry,
   addCaontry,
   updateCountry,
-
+  likeCountry,
 } from "@/api/countries";
-import { useQuery, useMutation} from "@tanstack/react-query";
+import {
+  useQuery,
+  useMutation,
+  useQueryClient /* useInfiniteQuery */,
+} from "@tanstack/react-query";
 
-interface Country {
+import { useVirtualizer } from "@tanstack/react-virtual";
+
+export interface Country {
   title: { [key: string]: string };
   capital: { [key: string]: string };
   description: { [key: string]: string };
@@ -38,79 +44,51 @@ interface Country {
 }
 
 const CountriesCards: React.FC = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const [isCountryVisible, setIsCountryVisible] = useState(false);
+  const sortOrder = searchParams.get("_order") || "desc";
+
+  const queryClient = useQueryClient();
+  queryClient.invalidateQueries({ queryKey: ["countries-list"] });
+
   const [countryToEdit, setCountryToEdit] = useState<CountryData | null>(null);
+  const parentRef = useRef<HTMLDivElement>(null);
 
-
-
-  // const [countriesList, setCountriesList] = useState<Country[]>([]);
-
- /*  useEffect(() => {
-    getCountries().then((countries) => {
-      return setCountriesList(countries);
-    });
-  }, []); */
-
-
-  const { data: countriesList, isLoading, isError } = useQuery({
-    queryKey: ["countries-list"],
-    queryFn: getCountries,
+  const {
+    data: countriesList,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["countries-list", sortOrder],
+    queryFn: () => getCountries(sortOrder),
   });
 
-  const {mutate:deleteMutation} = useMutation({
+  const rowVirtualizer = useVirtualizer({
+    count: countriesList?.length || 0,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 800,
+  });
+
+  const { mutate: deleteMutation } = useMutation({
     mutationFn: deleteCountry,
-    
   });
-  
 
   const handleDeleteCountry = async (id: string) => {
-    /*  try {
-       await deleteCountry(id);
- 
-       setCountriesList((prevCountries) => {
-         return prevCountries.filter((country) => country.id !== id);
-       });
-     } catch (error) {
-       console.log(error);
-     } */
-       deleteMutation(id)
-   };
+    deleteMutation(id);
+  };
 
-
-
-
-
-   const {mutate:updateMutation,  isError: isUpdateError} = useMutation({
+  const { mutate: updateMutation } = useMutation({
     mutationFn: updateCountry,
-   
   });
-
 
   const handleCountryUpdate = async (countryToUpdate: CountryData) => {
-    /* try {
-      const updatedCountry = await updateCountry(countryToUpdate);
-      setCountryToEdit(null);
-      setCountriesList((prevCountries) => {
-        return prevCountries.map((country) => {
-          if (country.id === updatedCountry.id) {
-            return updatedCountry;
-          } else {
-            return country;
-          }
-        });
-      });
-    } catch (error) {
-      console.log(error);
-    } */
-      updateMutation(countryToUpdate)
+    updateMutation(countryToUpdate);
   };
-  
-  const {mutate:addMutation} = useMutation({
-    mutationFn:addCaontry
-    
+
+  const { mutate: addMutation } = useMutation({
+    mutationFn: addCaontry,
   });
-
-
 
   const handleAddCountry = async (
     e: FormEvent<HTMLFormElement>,
@@ -138,49 +116,8 @@ const CountriesCards: React.FC = () => {
       isMarkedForDelete: false,
     };
 
-   /*  try {
-      const addedCountry = await addCaontry(newCountry);
-
-      setCountriesList((prevCountries) => [...prevCountries, addedCountry]);
-
-      setIsCountryVisible(false);
-    } catch (error) {
-      console.error("Failed to add country:", error);
-    } */
-
-      addMutation(newCountry)
+    addMutation(newCountry);
   };
-  
-
-
-  const handleSortCards = async () => {
-    /* try {
-      const response = await sortCountries();
-
-      console.log("Countries fetched:", response);
-
-      if (response && response.length > 0) {
-        const sortedData = response.sort((a: Country, b: Country) => {
-          return b.like - a.like;
-
-         
-        });
-
-        setCountriesList(sortedData);
-      }
-      
-       await Promise.all(sortedData.map(country => 
-                getSortedCountries(country) // Assuming this sends the country data back to the server
-            ));
-
-    } catch (error) {
-      console.log("Error sorting countries:", error);
-    } */
-  };
-
- 
-
-  
 
   const handleEditCountry = (country: Country) => {
     const countryData: CountryData = {
@@ -206,19 +143,32 @@ const CountriesCards: React.FC = () => {
     setCountryToEdit(countryData);
   };
 
- 
-  console.log("countries data",countriesList)
-  console.log("loading",isLoading)
-  console.log("error", isError)
+  console.log("countries data", countriesList);
+  console.log("loading", isLoading);
+  console.log("error", isError);
 
   const handleCountryVisibility = () => {
     setIsCountryVisible((prev) => !prev);
     setCountryToEdit(null);
   };
 
-  /* const handleLike =() =>{
-    console.log("sorry cant like")
-  } */
+  const { mutate: likeMutation } = useMutation({
+    mutationFn: likeCountry,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["countries-list", sortOrder],
+      });
+    },
+  });
+
+  const handleLike = (id: string) => {
+    likeMutation(id);
+  };
+
+  const handleSortCards = () => {
+    const newSortOrder = sortOrder === "desc" ? "asc" : "desc";
+    setSearchParams({ _sort: "like", _order: newSortOrder }); 
+  };
 
   const { lang } = useParams<{ lang: string }>();
 
@@ -255,58 +205,78 @@ const CountriesCards: React.FC = () => {
         )}
 
         <Row className={classes["card-row"]}>
-    
-          {countriesList.map((country) => (
-            <Card
-              isMarkedForDelete={country.isMarkedForDelete}
-              key={country.id}
+          <div ref={parentRef} className={classes.virtualWrapper}>
+            <div
+              style={{
+                height: `${rowVirtualizer.getTotalSize()}px`,
+                position: "relative",
+              }}
             >
-              <CardImage>
-                <img
-                  src={country.image}
-                  alt={translateCountryField(country.title)}
-                />
-              </CardImage>
-              <CardInfo>
-                <h2>{translateCountryField(country.title)}</h2>
-                <InfoBody>
-                {/*   <LikeBox
-                    like={country.like}
-                    onClick={() => handleLike(country.id!)}
-                  /> */}
-                  <CountryInfo>
-                    <div>{lang === "ka" ? "დედაქალაქი:" : "Capital:"}</div>{" "}
-                    {translateCountryField(country.capital)}
-                  </CountryInfo>
-                  <CountryInfo>
-                    <div>{lang === "ka" ? "მოსახლეობა:" : "Population:"}</div>
-                    {country.population
-                      ? Number(country.population).toLocaleString()
-                      : "N/A"}
-                  </CountryInfo>
-                </InfoBody>
-                <Link
-                  className={classes.seemore}
-                  to={`countriedetail/${country.id}`}
-                >
-                  {lang === "ka" ? "მეტის ნახვა" : "See more"}
-                </Link>
-                <div className={classes.buttons}>
-                  <Button
-                    onClick={() => handleDeleteCountry(country.id)}
-                    title={lang === "ka" ? "წაშლა" : "Delete"}
-                  />
-
-                  <Button 
-                    
-                    onClick={() => handleEditCountry(country)}
-                    title={lang === "ka" ? "შესწორება" : "Edit"}
-                    disabled={isUpdateError} 
-                  />
-                </div>
-              </CardInfo>
-            </Card>
-          ))}
+              {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+                const country = countriesList[virtualRow.index];
+                return (
+                  <div
+                    key={country.id}
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      transform: `translateY(${virtualRow.start}px)`,
+                    }}
+                  >
+                    <Card isMarkedForDelete={country.isMarkedForDelete}>
+                      <CardImage>
+                        <img
+                          src={country.image}
+                          alt={translateCountryField(country.title)}
+                        />
+                      </CardImage>
+                      <CardInfo>
+                        <h2>{translateCountryField(country.title)}</h2>
+                        <InfoBody>
+                          <LikeBox
+                            like={country.like}
+                            onClick={() => handleLike(country.id)}
+                          />
+                          <CountryInfo>
+                            <div>
+                              {lang === "ka" ? "დედაქალაქი:" : "Capital:"}
+                            </div>
+                            {translateCountryField(country.capital)}
+                          </CountryInfo>
+                          <CountryInfo>
+                            <div>
+                              {lang === "ka" ? "მოსახლეობა:" : "Population:"}
+                            </div>
+                            {country.population
+                              ? Number(country.population).toLocaleString()
+                              : "N/A"}
+                          </CountryInfo>
+                        </InfoBody>
+                        <Link
+                          className={classes.seemore}
+                          to={`countriedetail/${country.id}`}
+                        >
+                          {lang === "ka" ? "მეტის ნახვა" : "See more"}
+                        </Link>
+                        <div className={classes.buttons}>
+                          <Button
+                            onClick={() => handleDeleteCountry(country.id)}
+                            title={lang === "ka" ? "წაშლა" : "Delete"}
+                          />
+                          <Button
+                            onClick={() => handleEditCountry(country)}
+                            title={lang === "ka" ? "შესწორება" : "Edit"}
+                          />
+                        </div>
+                      </CardInfo>
+                    </Card>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </Row>
       </Container>
     </section>

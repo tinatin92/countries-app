@@ -4,6 +4,8 @@
   border-radius: 16px;
   display: block;
   position: relative;
+  margin-bottom: 40px;
+  
 }
 
 .country-box:hover img {

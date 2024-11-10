@@ -37,6 +37,14 @@
   gap: 44px;
 }
 
+.virtualWrapper {
+  height: 700px;
+  width: 100%;
+  overflow: auto;
+ 
+  border: 4px solid #000;
+}
+
 @media (max-width: 1620px) {
   .countries {
     margin: 150px 0;

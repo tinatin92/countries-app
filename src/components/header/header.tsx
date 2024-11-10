@@ -14,11 +14,15 @@ const navData = {
     about: "About AllGlobe",
     contact: "Contact",
     otp: "OTP",
+    virtulization: "Virtualization",
+    scroll : "Infinite Scroll"
   },
   ka: {
     about: "ჩვენს შესახებ",
     contact: "კონტაქტი",
     otp: "OTP",
+    virtulization:"ვირტუალიზაცია",
+    scroll : "Infinite Scroll"
   },
 };
 
@@ -54,6 +58,12 @@ export const Header: React.FC = () => {
               </NavLink>
               <NavLink to="about" className={handleActiveNav}>
                 {content.about}
+              </NavLink>
+              <NavLink to="list" className={handleActiveNav}>
+                {content.virtulization}
+              </NavLink>
+              <NavLink to="scroll" className={handleActiveNav}>
+                {content.scroll}
               </NavLink>
               <NavLink to="contact" className={handleActiveNav}>
                 {content.contact}

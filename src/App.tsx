@@ -50,9 +50,9 @@ const App: React.FC = () => {
             </Suspense>
           }
         />
-         <Route path="list" element={<VirtualList/>} />
-         <Route path="scroll" element={<InfiniteScroll />} />
-         
+        <Route path="list" element={<VirtualList />} />
+        <Route path="scroll" element={<InfiniteScroll />} />
+
         <Route
           path="otp"
           element={
@@ -70,7 +70,7 @@ const App: React.FC = () => {
           }
         />
       </Route>
-      
+
       <Route path="/" element={<Navigate to="/ka/" />} />
     </Routes>
   );

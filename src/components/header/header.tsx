@@ -15,14 +15,14 @@ const navData = {
     contact: "Contact",
     otp: "OTP",
     virtulization: "Virtualization",
-    scroll : "Infinite Scroll"
+    scroll: "Infinite Scroll",
   },
   ka: {
     about: "ჩვენს შესახებ",
     contact: "კონტაქტი",
     otp: "OTP",
-    virtulization:"ვირტუალიზაცია",
-    scroll : "Infinite Scroll"
+    virtulization: "ვირტუალიზაცია",
+    scroll: "Infinite Scroll",
   },
 };
 

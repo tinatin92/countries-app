@@ -7,11 +7,14 @@ import { Country } from "../../components/cards-section/countries-cards/Countrie
 const CountrieDetailPage: React.FC = () => {
   const { id, lang } = useParams<{ id: string; lang: string }>();
 
-
-  const { data: countryDetail, isLoading, isError } = useQuery<Country | undefined>({
+  const {
+    data: countryDetail,
+    isLoading,
+    isError,
+  } = useQuery<Country | undefined>({
     queryKey: ["country-detail", id],
     queryFn: () => getCountryDetail(id!),
-    enabled: !!id, 
+    enabled: !!id,
   });
 
   if (isLoading) {
@@ -19,7 +22,7 @@ const CountrieDetailPage: React.FC = () => {
   }
 
   if (isError || !countryDetail) {
-    return <p>Country not found or error loading details.</p>;  
+    return <p>Country not found or error loading details.</p>;
   }
 
   const language = lang === "en" || lang === "ka" ? lang : "en";

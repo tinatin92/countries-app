@@ -6,7 +6,7 @@ import "./index.css";
 
 import { BrowserRouter } from "react-router-dom";
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   // <StrictMode>
@@ -14,6 +14,6 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
-    </QueryClientProvider>
+  </QueryClientProvider>,
   // </StrictMode>,
 );

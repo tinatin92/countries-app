@@ -20,7 +20,6 @@ export interface Country {
   isMarkedForDelete: boolean;
 }
 
-
 /* export const getCountries = async (): Promise<Country[] | undefined> => {
   try {
     const response = await httpClient.get<Country[]>("/countries");
@@ -30,12 +29,13 @@ export interface Country {
   }
 }; */
 
-
-export const getCountries = async (sortOrder: string = ""): Promise<Country[]> => {
+export const getCountries = async (
+  sortOrder: string = ""
+): Promise<Country[]> => {
   try {
-    // Make the API request with the dynamic _sort parameter
+    // Make the API request with the dynamic _sort and _order parameters
     const response = await httpClient.get<Country[]>(
-      `/countries?_sort=likes&_order=${sortOrder}`  // Add the sort query to the request
+      `/countries?_sort=like&_order=${sortOrder}` // Pass the sort order
     );
     return response.data;
   } catch (error) {
@@ -45,8 +45,9 @@ export const getCountries = async (sortOrder: string = ""): Promise<Country[]> =
 };
 
 
-
-export const deleteCountry = async (id: string): Promise<Country[] | undefined> => {
+export const deleteCountry = async (
+  id: string,
+): Promise<Country[] | undefined> => {
   try {
     const response = await httpClient.delete<Country[]>(`/countries/${id}`);
     return response.data;
@@ -55,13 +56,13 @@ export const deleteCountry = async (id: string): Promise<Country[] | undefined> 
   }
 };
 
-
-
-export const getCountryDetail = async (id: string): Promise<Country | undefined> => {
+export const getCountryDetail = async (
+  id: string,
+): Promise<Country | undefined> => {
   try {
     const response = await httpClient.get<Country>(`countries/${id}`);
     if (!response.data) {
-      return undefined; 
+      return undefined;
     }
     return response.data;
   } catch (error) {
@@ -70,8 +71,6 @@ export const getCountryDetail = async (id: string): Promise<Country | undefined>
   }
 };
 
-
- 
 /* useEffect(() => {
   axios
     .get(`http://localhost:3000/countries/${id}`)
@@ -83,7 +82,9 @@ export const getCountryDetail = async (id: string): Promise<Country | undefined>
     });
 }, [id]); */
 
-export const addCaontry = async (country: CountryData): Promise<Country[] | undefined> => {
+export const addCaontry = async (
+  country: CountryData,
+): Promise<Country[] | undefined> => {
   try {
     const response = await httpClient.post<Country[]>("/countries", country);
     return response.data;
@@ -92,9 +93,14 @@ export const addCaontry = async (country: CountryData): Promise<Country[] | unde
   }
 };
 
-export const updateCountry = async (country: CountryData): Promise<Country[] | undefined> => {
+export const updateCountry = async (
+  country: CountryData,
+): Promise<Country[] | undefined> => {
   try {
-    const response = await httpClient.put<Country[]>(`/countries/${country.id}`, country);
+    const response = await httpClient.put<Country[]>(
+      `/countries/${country.id}`,
+      country,
+    );
     return response.data;
   } catch (error) {
     console.log(error);
@@ -111,11 +117,8 @@ export const updateCountry = async (country: CountryData): Promise<Country[] | u
 };
  */
 
-
-
 export const likeCountry = async (id: string): Promise<Country | undefined> => {
   try {
-
     const response = await httpClient.get<Country>(`/countries/${id}`);
     const currentCountry = response.data;
 
@@ -124,14 +127,15 @@ export const likeCountry = async (id: string): Promise<Country | undefined> => {
       like: currentCountry.like + 1,
     };
 
-   
-    const updateResponse = await httpClient.put<Country>(`/countries/${id}`, updatedCountry);
+    const updateResponse = await httpClient.put<Country>(
+      `/countries/${id}`,
+      updatedCountry,
+    );
     return updateResponse.data;
   } catch (error) {
     console.error("Failed to like country:", error);
   }
 };
-
 
 /* export const getSortedCountries = async (sortOrder: string): Promise<Country[] | undefined> => {
   try {
@@ -149,12 +153,12 @@ export const likeCountry = async (id: string): Promise<Country | undefined> => {
 }; */
 
 export const getSortedCountries = async (
-  sortOrder: string = "desc" // Default to 'desc' if not passed
+  sortOrder: string = "desc", // Default to 'desc' if not passed
 ): Promise<Country[]> => {
   try {
     // Make the API request with dynamic _sort and _order query parameters
     const response = await httpClient.get<Country[]>(
-      `/countries?_sort=likes&_order=${sortOrder}`
+      `/countries?_sort=likes&_order=${sortOrder}`,
     );
     return response.data;
   } catch (error) {
@@ -162,6 +166,3 @@ export const getSortedCountries = async (
     throw new Error("Failed to fetch countries data.");
   }
 };
-
-
- 

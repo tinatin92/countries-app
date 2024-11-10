@@ -10,31 +10,26 @@ export interface Todo {
 }
 
 const InfiniteScroll: React.FC = () => {
-
   const getCountries = async ({ pageParam = 1 }): Promise<Todo[]> => {
     const response = await axios.get(
-      `https://jsonplaceholder.typicode.com/todos?_page=${pageParam}&_limit=10`
+      `https://jsonplaceholder.typicode.com/todos?_page=${pageParam}&_limit=10`,
     );
     return response.data;
   };
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["todo-list"],
-    queryFn: getCountries,
-    initialPageParam: 1, // Add initialPageParam to define the starting page
-    getNextPageParam: (lastPage, allPages) => {
-      // Define the logic to decide if there’s another page to load
-      if (lastPage && lastPage.length) {
-        return allPages.length + 1;
-      }
-      return undefined;
-    },
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["todo-list"],
+      queryFn: getCountries,
+      initialPageParam: 1, // Add initialPageParam to define the starting page
+      getNextPageParam: (lastPage, allPages) => {
+        // Define the logic to decide if there’s another page to load
+        if (lastPage && lastPage.length) {
+          return allPages.length + 1;
+        }
+        return undefined;
+      },
+    });
 
   const todoList = data?.pages.flat() || [];
 

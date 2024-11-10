@@ -73,7 +73,11 @@ const CountriesCards: React.FC = () => {
   const { mutate: deleteMutation } = useMutation({
     mutationFn: deleteCountry,
   });
-
+  const handleSortCards = () => {
+    const newSortOrder = sortOrder === "desc" ? "asc" : "desc";
+    setSearchParams({ _sort: "like", _order: newSortOrder });
+  };
+  
   const handleDeleteCountry = async (id: string) => {
     deleteMutation(id);
   };
@@ -165,10 +169,7 @@ const CountriesCards: React.FC = () => {
     likeMutation(id);
   };
 
-  const handleSortCards = () => {
-    const newSortOrder = sortOrder === "desc" ? "asc" : "desc";
-    setSearchParams({ _sort: "like", _order: newSortOrder }); 
-  };
+
 
   const { lang } = useParams<{ lang: string }>();
 
